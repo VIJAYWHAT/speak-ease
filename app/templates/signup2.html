@@ -68,10 +68,12 @@
           </select>
 
           <label class="align-left">Availability</label>
-          <div class="availability">
-            <input type="number" id="from-time" placeholder="From Time" min="0" max="24" />
-            <input type="number" id="to-time" placeholder="To Time" min="0" max="24" />
-          </div>
+          
+            <div class="availability">
+                <input class="from-time" type="time" placeholder="From Time" />
+                <input class="to-time" type="time" placeholder="To Time" />
+            </div>
+
           <p id="error-message" class="error-message"></p>
 
           <label class="align-left">Days</label>
