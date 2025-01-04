@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Details</title>
+    <link rel="stylesheet" href="static/css/signup2.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>User Details</h1>
+      <div class="form-container">
+        <!-- Left Form -->
+        <div class="form-section">
+          <label class="align-left">Name</label>
+          <input type="text" placeholder="Enter the name" />
+
+          <label class="align-left">Phone Number</label>
+          <input type="text" placeholder="Enter the Phone Number" />
+
+          <label class="align-left">Age</label>
+          <input type="text" placeholder="Enter the age" />
+
+          <label class="align-left">Gender</label>
+          <div class="radio-group">
+            <input type="radio" name="gender" /> Male
+            <input type="radio" name="gender" /> Female
+            <input type="radio" name="gender" /> Other
+          </div>
+
+          <label class="align-left">Native Language</label>
+          <select>
+            <option>Tamil</option>
+            <option>English</option>
+            <option>Hindi</option>
+          </select>
+
+          <label class="align-left">I want to learn...</label>
+          <div class="learn-group">
+            <button>English</button>
+            <button>Hindi</button>
+            <button>Spanish</button>
+            <button>French</button>
+          </div>
+        </div>
+
+        <!-- Right Form -->
+        <div class="form-section">
+          <label class="align-left">Reason for learning</label>
+          <div class="learn-group reason-group">
+            <button>Learn new language</button>
+            <button>Just for fun</button>
+            <button>Boost career opportunities</button>
+            <button>Travel</button>
+          </div>
+
+          <label class="align-left">Location</label>
+          <select>
+            <option>William Lake</option>
+            <option>New York</option>
+            <option>Los Angeles</option>
+          </select>
+
+          <label class="align-left">Role</label>
+          <select>
+            <option>Student</option>
+            <option>Professional</option>
+          </select>
+
+          <label class="align-left">Availability</label>
+          <div class="availability">
+            <input type="number" id="from-time" placeholder="From Time" min="0" max="24" />
+            <input type="number" id="to-time" placeholder="To Time" min="0" max="24" />
+          </div>
+          <p id="error-message" class="error-message"></p>
+
+          <label class="align-left">Days</label>
+          <div class="learn-group">
+            <button>S</button>
+            <button>M</button>
+            <button>T</button>
+            <button>W</button>
+            <button>T</button>
+            <button>F</button>
+            <button>S</button>
+          </div>
+          
+          <button class="submit-btn">Submit</button>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    background: #a5cff0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .container {
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin: 20px 0;
+    font-weight: bold;
+    color: #111;
+  }
+
+  .form-container {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    gap: 20px;
+  }
+
+  .form-section {
+    width: 48%;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    text-align: left;
+  }
+
+  label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .align-left {
+    text-align: left;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+  .radio-group {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  .learn-group {
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .learn-group button {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.3s, color 0.3s;
+}
+
+.learn-group button.selected {
+  background: #3d50f5;
+  color: white;
+  border-color: #3d50f5;
+}
+  .learn-group button:hover {
+    background: #e0e0e0;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 10px;
+    background: #3d50f5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .submit-btn:hover {
+    background: #2a3bd3;
+  }
+
+  @media (max-width: 768px) {
+    .form-container {
+      flex-direction: column;
+    }
+
+    .form-section {
+      width: 100%;
+    }
+  }
+</style>
