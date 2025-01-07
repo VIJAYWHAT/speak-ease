@@ -1,15 +1,18 @@
+import os
 import firebase_admin
 from flask import session
 from firebase_admin import credentials, firestore
 
-cred = credentials.Certificate("app/speak-ease-key.json")
-try:
+if os.getenv("RENDER"):
+    cred = credentials.Certificate("/etc/secrets/speak-ease-key.json")
+else:
+    cred = credentials.Certificate("app/speak-ease-key.json") 
+
+
+if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
-except ValueError:
-    print("Firebase already initialized")
 
 db = firestore.client()
-
 def get_qoutes():
     doc_ref = db.collection('speakease').document('landing')
     doc = doc_ref.get()
