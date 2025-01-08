@@ -3,14 +3,18 @@ import firebase_admin
 from firebase_admin import credentials, auth,  firestore
 from services import firestore_db
 from flask_cors import CORS
+import os
 
 
-cred = credentials.Certificate("app/speak-ease-key.json")
 
-try:
+if os.getenv("RENDER"):
+    cred = credentials.Certificate("/etc/secrets/speak-ease-key.json")
+else:
+    cred = credentials.Certificate("app/speak-ease-key.json") 
+
+
+if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
-except ValueError:
-    print("Firebase already initialized")
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 CORS(app)
