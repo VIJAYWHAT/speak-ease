@@ -95,3 +95,11 @@ document.getElementById("login-form").addEventListener("submit", function() {
   button.classList.add("disabled");
   button.disabled = true;
 });
+
+function openModal() {
+  document.getElementById("webModal").style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById("webModal").style.display = "none";
+}

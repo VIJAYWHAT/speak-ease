@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messaging Platform</title>
+    <link rel="stylesheet" href="static/css/chat.css" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <a class="brand-name" href="{{ url_for('home') }}">Speak Ease</a>
+      </div>
+
+      <div class="chat-list">
+        <h3>Chats</h3>
+        <button class="chat-item">Tutor 1</button>
+        <button class="chat-item">Forum 1</button>
+        <button class="chat-item">Forum 2</button>
+
+        <h3>Forums</h3>
+        <button class="chat-item">English Learners</button>
+        <button class="chat-item">Language Exchange</button>
+        <button class="chat-item">Career Boosters</button>
+      </div>
+    </div>
+
+    <!-- Main Chat Section -->
+    <div class="chat-container">
+      <!-- Chat Header -->
+
+      <div class="chat-header">
+        <div class="chat-title">
+          <span>👤 Tutor 1</span>
+        </div>
+        <button id="videoCall" class="video-call-btn">📹</button>
+      </div>
+
+      <!-- Chat Messages -->
+      <div class="chat-messages">
+        <div class="message received">Hello! How can I help?</div>
+        <div class="message sent">I want to learn English.</div>
+      </div>
+
+      <!-- Message Input -->
+      <div class="chat-input">
+        <input type="text" placeholder="Type a message..." id="messageBox" />
+        <button class="send-btn" id="sendMessage">➡</button>
+      </div>
+    </div>
+
+    <script type="module" src="{{ url_for('static', filename='js/chat.js') }}"></script>
+
+  </body>
+</html>

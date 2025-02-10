@@ -6,7 +6,6 @@ from flask_cors import CORS
 import os
 
 
-
 if os.getenv("RENDER"):
     cred = credentials.Certificate("/etc/secrets/speak-ease-key.json")
 else:
@@ -19,6 +18,7 @@ if not firebase_admin._apps:
 app = Flask(__name__, template_folder='templates', static_folder='static')
 CORS(app)
 app.secret_key = "your_secret_key"
+db = firestore.client()
 
 @app.route('/')
 def landing():
@@ -31,8 +31,39 @@ def dashboard():
 
 @app.route('/home')
 def home():
-    username = session.get('username', 'Guest')
-    return render_template('home.html', username=username)
+    if 'email' not in session:
+        return redirect(url_for('login'))  # Redirect if session email is missing
+
+    email = session['email']  # 🔹 Get email from session
+
+    # Fetch user document from Firestore
+    users_ref = db.collection("users").where("email", "==", email).stream()
+    user_data = None
+
+    for user in users_ref:
+        user_data = user.to_dict()
+        break  # Since email is unique, take the first match
+
+    if not user_data or "learn_languages" not in user_data:
+        return "User not found or no courses available!"
+
+    # Extract course IDs from the user document
+    course_ids = user_data["learn_languages"]
+    progress_data = user_data.get("progress", {})  # 🔹 Extract progress map
+
+    courses_data = []
+    for course_id in course_ids:
+        course_doc = db.collection("courses").document(course_id).get()
+        if course_doc.exists:
+            course_dict = course_doc.to_dict()
+            courses_data.append({
+                "id": course_id,
+                "name": course_dict.get("name", "Unknown"),
+                "progress": progress_data.get(course_id, "0"),  # 🔹 Get progress from map
+                "desc": course_dict.get("desc", "No description available")
+            })
+
+    return render_template('home.html', username=user_data['name'], email=email, courses=courses_data)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -45,7 +76,8 @@ def login():
 
         if user:
             session['username'] = user['name']
-            return redirect(url_for('home'))
+            session['email'] = user['email']  # 🔹 Store email in session
+            return redirect(url_for('home'))  # 🔹 No need to pass email in URL
         else:
             return render_template('login.html', error="Invalid credentials. Please try again.")
 
@@ -101,6 +133,54 @@ def signup2():
 
     return render_template('signup2.html')
 
+@app.route('/get_lessons')
+def get_lessons():
+    course_id = request.args.get('course_id')
+    
+    if not course_id:
+        return jsonify({"error": "Course ID is required"}), 400
+
+    # Fetch lessons from Firestore
+    lessons_ref = db.collection("courses").document(course_id).collection("lessons").stream()
+
+    lessons = []
+    for lesson in lessons_ref:
+        lesson_data = lesson.to_dict()
+        lessons.append({
+            "title": lesson_data.get("title", "No Title"),
+            "content": lesson_data.get("content", "No Content")
+        })
+
+    return jsonify(lessons)
+
+
+@app.route('/lesson_page')
+def lesson_page():
+    return render_template('lesson.html')
+
+@app.route('/get_quiz', methods=['GET'])
+def get_quiz():
+    quiz_doc = db.collection("quiz").document("day-quiz").get()
+
+    if not quiz_doc.exists:
+        return jsonify({"error": "Quiz not found"}), 404
+
+    quiz_data = quiz_doc.to_dict()
+
+    return jsonify({
+        "question": quiz_data.get("question", "No question available"),
+        "options": [
+            quiz_data.get("option1", ""),
+            quiz_data.get("option2", ""),
+            quiz_data.get("option3", ""),
+            quiz_data.get("option4", "")
+        ],
+        "correct_answer": quiz_data.get("correct_answer", "")  # This will be (option1, option3)
+    })
+
+@app.route('/chat')
+def chat():
+    return render_template('chat.html')
 
 @app.route('/logout')
 def logout():

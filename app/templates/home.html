@@ -5,136 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Speak Ease</title>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            background-color: #f0f8ff;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background-color: #0073e6;
-            color: white;
-            position: relative;
-        }
-        .logo {
-            background: #005bb5;
-            padding: 10px;
-            border-radius: 50%;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-        .logo img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-            margin-left: auto;
-        }
-        .profile, .score, .notification {
-            background: #005bb5;
-            padding: 15px;
-            border-radius: 50%;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            cursor: pointer;
-            width: 50px;
-            height: 50px;
-            position: relative;
-            font-size: 24px;
-        }
-        .profile i, .score i, .notification i {
-            font-size: 20px;
-        }
-        .notification-badge {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: red;
-            color: white;
-            font-size: 12px;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .menu-icon {
-            font-size: 24px;
-            cursor: pointer;
-        }
-        .title-container {
-            flex-grow: 1;
-            text-align: center;
-        }
-        .title-container h1 {
-            display: flex;
-            padding-left: 20px;
-            margin: 0;
-        }
-        .progress-section {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-        }
-        .progress-card {
-            background: #4da6ff;
-            padding: 50px;
-            width: 280px;
-            text-align: center;
-            border-radius: 10px;
-            color: white;
-            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-        }
-        .progress-circle {
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 20px;
-            border: 8px solid white;
-            border-radius: 50%;
-            background: #80c1ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: black;
-        }
-        .quiz-button {
-            padding: 14px 30px;
-            font-size: 22px;
-            background: #ff9900;
-            border: none;
-            cursor: pointer;
-            color: white;
-            border-radius: 5px;
-            position: absolute;
-            top: 100px;
-            right: 15px;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .language-row {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 40px;
-        }
-    </style>
+    <link rel="stylesheet" href="static/css/home.css" />
 </head>
 <body>
     <header>
@@ -144,41 +15,123 @@
         <div class="title-container">
             <h1>Speak Ease</h1>
         </div>
-        <nav class="nav-buttons">
-            <button class="score"><i class="fas fa-star"></i></button>
-            <button class="notification">
-                <i class="fas fa-bell"></i> 💬
-                <span class="notification-badge">3</span>
+        <nav class="nav-buttons" onclick="openVideoModal()">
+            <button class="score video-class-btn">
+                <img class='msg-img' src="{{ url_for('static', filename='images/World_Video.png')}}" alt="Msg">
             </button>
-            <button class="profile"><i class="fas fa-user"></i> <span style="font-size: 28px;">😊</span></button>
+            <button class="score" onclick="openAIModal()">
+                <img class='msg-img' src="{{ url_for('static', filename='images/Ai.png')}}" alt="Msg">
+            </button>
+            <a href="{{ url_for('chat') }}" class="notification"> <img class='msg-img' src="{{ url_for('static', filename='images/chat.png')}}" alt="Msg">
+            </a>
+            <a href="{{ url_for('chat') }}" class="profile"> <img class='prof-img' src="{{ url_for('static', filename='images/profile.png')}}" alt="profile">
+            </a>
         </nav>
         <div class="menu-icon"><i class="fas fa-bars"></i></div>
-        <button class="quiz-button"><i class="fas fa-question-circle"></i> Quiz</button>
+        <button class="quiz-button" id="open-quiz"><i class="fas fa-question-circle"></i> Quiz</button>
+
+        <!-- Video Class Modal -->
+        <div class="video-class-modal" id="videoClassModal">
+            <span class="close-video-class" onclick="closeVideoClass()">&times;</span>
+            <h2>Online Video Classes</h2>
+            <div class="class-list">
+                <div class="class-card">
+                    <img src="{{ url_for('static', filename='images/video.png') }}" alt="Class 1">
+                    <h3>Basic English Conversations</h3>
+                    <p>Improve your everyday English skills with interactive lessons.</p>
+                    <a href="https://meet.google.com/ent-znwe-qhq" target="_blank" class="join-btn">Join Now</a>
+                </div>
+                <div class="class-card">
+                    <img src="{{ url_for('static', filename='images/video.png') }}" alt="Class 2">
+                    <h3>French for Beginners</h3>
+                    <p>Start learning French with easy and fun lessons.</p>
+                    <a href="https://meet.google.com/ent-znwe-qhq" target="_blank" class="join-btn">Join Now</a>
+                </div>
+                <div class="class-card">
+                    <img src="{{ url_for('static', filename='images/video.png') }}" alt="Class 3">
+                    <h3>Spanish Travel Guide</h3>
+                    <p>Learn essential Spanish phrases for traveling.</p>
+                    <a href="https://meet.google.com/ent-znwe-qhq" target="_blank" class="join-btn">Join Now</a>
+
+                </div>
+                <div class="class-card">
+                    <img src="{{ url_for('static', filename='images/video.png') }}" alt="Class 4">
+                    <h3>Advanced Hindi Speaking</h3>
+                    <p>Enhance your fluency with structured Hindi lessons.</p>
+                    <a href="https://meet.google.com/ent-znwe-qhq" target="_blank" class="join-btn">Join Now</a>
+
+                </div>
+                <div class="class-card">
+                    <img src="{{ url_for('static', filename='images/video.png') }}" alt="Class 5">
+                    <h3>Public Speaking in English</h3>
+                    <p>Master confidence and fluency in English speech.</p>
+                    <a href="https://meet.google.com/ent-znwe-qhq" target="_blank" class="join-btn">Join Now</a>
+                </div>
+            </div>
+        </div>
+       
+        <!-- Quiz Popup -->
+        <div id="quiz-popup" class="quiz-modal">
+            <div class="quiz-content">
+                <span id="close-quiz">X</span>
+                <h2 id="quiz-question">Loading...</h2>
+                <div id="quiz-options"></div>
+                <button id="submit-answer">Submit</button>
+            </div>
+        </div>
+
+        <!-- AI Chatbot Modal -->
+        <div class="modal" id="aiModal">
+            <span class="close" onclick="closeAIModal()">&times;</span>
+            <iframe src="https://www.ibm.com/granite/playground/" allow="microphone;"></iframe>
+        </div>
+        <!-- Answer Popup -->
+        <div id="result-popup" class="result-modal">
+            <div class="result-content">
+                <p id="result-message"></p>
+            </div>
+        </div>
     </header>
     <main>
+        
         <section class="progress-section">
-            <div class="language-row">
+            {% for course in courses %}
+            <a href="{{ url_for('lesson_page') }}?course_id={{ course.id }}" class="progress-card-link">
                 <div class="progress-card">
-                    <div class="progress-circle">10%</div>
-                    <p><i class="fas fa-globe"></i> English</p>
+                    <div class="progress-circle">{{ course.progress }}%</div>
+                    <p><i class="fas fa-globe"></i> {{ course.name }}</p>
+                    <p class="description">{{ course.desc }}</p>
                 </div>
-                <div class="progress-card">
-                    <div class="progress-circle">20%</div>
-                    <p><i class="fas fa-globe"></i> Hindi</p>
-                </div>
-            </div>
-            <div class="language-row">
-                <div class="progress-card">
-                    <div class="progress-circle">15%</div>
-                    <p><i class="fas fa-globe"></i> Spanish</p>
-                </div>
-                <div class="progress-card">
-                    <div class="progress-circle">25%</div>
-                    <p><i class="fas fa-globe"></i> French</p>
-                </div>
-            </div>
+            </a>
+            {% endfor %}
         </section>
+        
     </main>
-    <script src="script.js"></script>
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+    <style>
+        
+    </style>
+    
+    <!-- JavaScript to Open & Close AI Modal -->
+    <script>
+        function openAIModal() {
+            document.getElementById("aiModal").style.display = "block";
+        }
+    
+        function closeAIModal() {
+            document.getElementById("aiModal").style.display = "none";
+        }
+
+        function openVideoClass() {
+            document.getElementById("videoClassModal").style.display = "block";
+        }
+
+        function closeVideoClass() {
+            document.getElementById("videoClassModal").style.display = "none";
+        }
+
+        document.querySelector('.video-class-btn').addEventListener('click', openVideoClass);
+    </script>
 </body>
 </html>

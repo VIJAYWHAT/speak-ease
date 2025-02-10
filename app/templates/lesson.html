@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speak Ease</title>
+    <link rel="stylesheet" href="static/css/lesson.css">
+  </head>
+  <body>
+    <header>
+      <a href="{{ url_for('home') }}" class="title">Speak Ease</a>
+    </header>
+
+    <main>
+      <h1 id="section-title">Title</h1>
+      <div class="content-placeholder">
+        <div class="line"></div>
+      </div>
+
+      <div class="buttons">
+        <button class="tab-btn">Presentation</button>
+        <button class="tab-btn">Videos</button>
+        <button class="tab-btn">Quiz</button>
+      </div>
+
+      <div class="navigation">
+        <button id="prev-btn" class="nav-btn">←</button>
+        <button id="next-btn" class="nav-btn">→</button>
+      </div>
+    </main>
+
+    <script type="module" src="{{ url_for('static', filename='js/lesson.js') }}"></script>
+
+  </body>
+</html>
