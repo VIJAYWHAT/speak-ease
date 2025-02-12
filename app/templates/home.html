@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="logo">
-            <img src="logo.png" alt="Logo">
+            <img src="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}" alt="Logo">
         </div>
         <div class="title-container">
             <h1>Speak Ease</h1>
@@ -22,9 +22,9 @@
             <button class="score" onclick="openAIModal()">
                 <img class='msg-img' src="{{ url_for('static', filename='images/Ai.png')}}" alt="Msg">
             </button>
-            <a href="{{ url_for('chat') }}" class="notification"> <img class='msg-img' src="{{ url_for('static', filename='images/chat.png')}}" alt="Msg">
+            <a href="{{ url_for('chat') }}" class="notification"> <img class='msg-img' src="{{ url_for('static', filename='images/msg-ic.jpg')}}" alt="Msg">
             </a>
-            <a href="{{ url_for('chat') }}" class="profile"> <img class='prof-img' src="{{ url_for('static', filename='images/profile.png')}}" alt="profile">
+            <a href="{{ url_for('profile') }}" class="profile"> <img class='prof-img' src="{{ url_for('static', filename='images/profile.png')}}" alt="profile">
             </a>
         </nav>
         <div class="menu-icon"><i class="fas fa-bars"></i></div>
@@ -35,40 +35,22 @@
             <span class="close-video-class" onclick="closeVideoClass()">&times;</span>
             <h2>Online Video Classes</h2>
             <div class="class-list">
+                {% for class in video_classes %}
                 <div class="class-card">
-                    <img src="{{ url_for('static', filename='images/video.png') }}" alt="Class 1">
-                    <h3>Basic English Conversations</h3>
-                    <p>Improve your everyday English skills with interactive lessons.</p>
-                    <a href="https://meet.google.com/ent-znwe-qhq" target="_blank" class="join-btn">Join Now</a>
+                    <img src="{{ url_for('static', filename='images/video.png') }}" alt="Video Class">
+                    <h3>{{ class.title }}</h3>
+                    <p>{{ class.desc }}</p>
+                    <p><strong>Tutor:</strong> {{ class.tutor_name }}</p>
+                    <a href="{{ class.link }}" target="_blank" class="join-btn">Join Now</a>
                 </div>
-                <div class="class-card">
-                    <img src="{{ url_for('static', filename='images/video.png') }}" alt="Class 2">
-                    <h3>French for Beginners</h3>
-                    <p>Start learning French with easy and fun lessons.</p>
-                    <a href="https://meet.google.com/ent-znwe-qhq" target="_blank" class="join-btn">Join Now</a>
-                </div>
-                <div class="class-card">
-                    <img src="{{ url_for('static', filename='images/video.png') }}" alt="Class 3">
-                    <h3>Spanish Travel Guide</h3>
-                    <p>Learn essential Spanish phrases for traveling.</p>
-                    <a href="https://meet.google.com/ent-znwe-qhq" target="_blank" class="join-btn">Join Now</a>
-
-                </div>
-                <div class="class-card">
-                    <img src="{{ url_for('static', filename='images/video.png') }}" alt="Class 4">
-                    <h3>Advanced Hindi Speaking</h3>
-                    <p>Enhance your fluency with structured Hindi lessons.</p>
-                    <a href="https://meet.google.com/ent-znwe-qhq" target="_blank" class="join-btn">Join Now</a>
-
-                </div>
-                <div class="class-card">
-                    <img src="{{ url_for('static', filename='images/video.png') }}" alt="Class 5">
-                    <h3>Public Speaking in English</h3>
-                    <p>Master confidence and fluency in English speech.</p>
-                    <a href="https://meet.google.com/ent-znwe-qhq" target="_blank" class="join-btn">Join Now</a>
-                </div>
+                {% endfor %}
+                
+                {% if video_classes|length == 0 %}
+                <p>No upcoming classes available.</p>
+                {% endif %}
             </div>
         </div>
+
        
         <!-- Quiz Popup -->
         <div id="quiz-popup" class="quiz-modal">

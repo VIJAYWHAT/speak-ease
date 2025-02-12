@@ -4,6 +4,7 @@ from firebase_admin import credentials, auth,  firestore
 from services import firestore_db
 from flask_cors import CORS
 import os
+from datetime import datetime
 
 
 if os.getenv("RENDER"):
@@ -62,8 +63,30 @@ def home():
                 "progress": progress_data.get(course_id, "0"),  # 🔹 Get progress from map
                 "desc": course_dict.get("desc", "No description available")
             })
+    
+    # Fetch video classes details
+    now = datetime.now()  # Get current time
 
-    return render_template('home.html', username=user_data['name'], email=email, courses=courses_data)
+    classes_ref = db.collection('videoclass')
+    docs = classes_ref.stream()
+
+    upcoming_classes = []
+    
+    for doc in docs:
+        data = doc.to_dict()
+        
+        class_time = datetime.strptime(data['datetime'], "%d-%m-%Y %H:%M")
+        print(f"Class time: {class_time}, Current time: {now}") 
+        
+        if class_time > now:
+            upcoming_classes.append({
+                'title': data['title'],
+                'desc': data['desc'],
+                'link': data['link'],
+                'tutor_name': data['tutor_name']
+            })
+        
+    return render_template('home.html', username=user_data['name'], email=email, courses=courses_data, video_classes=upcoming_classes)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -133,6 +156,7 @@ def signup2():
 
     return render_template('signup2.html')
 
+
 @app.route('/get_lessons')
 def get_lessons():
     course_id = request.args.get('course_id')
@@ -153,6 +177,10 @@ def get_lessons():
 
     return jsonify(lessons)
 
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
 
 @app.route('/lesson_page')
 def lesson_page():

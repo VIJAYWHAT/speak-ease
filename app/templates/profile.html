@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>User Profile</h1>
+            <nav>
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="#">Quizzes</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="profile">
+        <div class="container">
+            <div class="profile-header">
+                <img src="{{ url_for('static', filename='images/profile.png')}}" alt="Profile Picture" class="profile-pic">
+                <div class="profile-info">
+                    <h2>John Doe</h2>
+                    <p>Email: john.doe@example.com</p>
+                    <p>Language: English, Spanish</p>
+                    <p>Progress: 80%</p>
+                    <button>Edit Profile</button>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <h3>Learning Progress</h3>
+                <div class="progress">
+                    <div class="progress-bar-filled" style="width: 80%;"></div>
+                </div>
+            </div>
+            
+            <div class="course-list">
+                <h3>Courses In Progress</h3>
+                <ul>
+                    <li>English - Level 2</li>
+                    <li>Spanish  - Level 1</li>
+                    <li>Tamil - Level 1</li>
+                    <li>Hindi - Level 3</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Language Learning Platform. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

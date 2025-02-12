@@ -1,0 +1,234 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+/* Header Styles */
+header {
+    background-color: rgb(99, 174, 236);
+    padding: 20px 0;
+    color: white;
+    text-align: center;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    color: #f4f4f4;
+}
+
+/* Main Content */
+.main-content {
+    padding: 50px 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+.main-content h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.language-courses {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.course-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 250px;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.course-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.course-card h3 {
+    margin-top: 15px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.course-card p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #666;
+}
+
+.course-card button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.course-card button:hover {
+    background-color: #45a049;
+}
+
+.course-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    margin-top: 50px;
+}
+
+footer p {
+    font-size: 14px;
+}
+
+
+/* Profile Page Styles */
+.profile {
+    padding: 50px 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid black;
+}
+
+.profile-info {
+    font-size: 1.1rem;
+}
+
+.profile-info h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.profile-info p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.profile-info button {
+    background-color: #71dfee;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.profile-info button:hover {
+    background-color: #45a049;
+}
+
+.progress-bar {
+    margin-top: 40px;
+}
+
+.progress-bar h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.progress {
+    background-color: #ddd;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-filled {
+    background-color: #4CAF50;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.course-list {
+    margin-top: 40px;
+}
+
+.course-list h3 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.course-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.course-list li {
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
