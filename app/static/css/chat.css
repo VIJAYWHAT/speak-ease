@@ -39,6 +39,7 @@
   }
   
   .chat-item {
+    border-radius: 10px;
     width: 100%;
     padding: 10px;
     background: #eee;
