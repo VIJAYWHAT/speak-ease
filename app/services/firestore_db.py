@@ -1,6 +1,6 @@
 import firebase_admin
-from firebase_admin import credentials, firestore, auth
-from werkzeug.security import generate_password_hash
+from flask import session
+from firebase_admin import credentials, firestore
 
 cred = credentials.Certificate("app/speak-ease-key.json")
 try:
@@ -20,24 +20,11 @@ def get_qoutes():
     return 'Guest'
 
 
-def add_user(email, password, name, phone, age, gender, native_language, learn_languages, learning_reason, location, role, availability_from, availability_to, available_days):
+def add_user(user_data):
     users_ref = db.collection('users')
-    users_ref.add({
-        'email': email,
-        'password': password,  # Consider hashing for security
-        'name': name,
-        'phone': phone,
-        'age': age,
-        'gender': gender,
-        'native_language': native_language,
-        'learn_languages': learn_languages,  # Stored as an array
-        'learning_reason': learning_reason,  # Stored as an array
-        'location': location,
-        'role': role,
-        'availability_from': availability_from,
-        'availability_to': availability_to,
-        'available_days': available_days  # Stored as an array
-    })
+    users_ref.add(user_data)
+    session['username'] = user_data['name']
+    print("User added successfully!")
 
 def authenticate_user(contact, password):
     users_ref = db.collection('users')

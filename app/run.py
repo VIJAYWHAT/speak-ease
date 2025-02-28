@@ -65,31 +65,35 @@ def signup():
 @app.route('/signup2', methods=['GET', 'POST'])
 def signup2():
     if request.method == 'POST':
-        # Get stored email and password
+        # Get stored email and password from session
         email = session.get('email')
         password = session.get('password')
 
         if not email or not password:
             return redirect(url_for('signup'))  # Redirect back if session expired
 
-        # Get user details from the form
-        name = request.form.get('name')
-        phone = request.form.get('phone')
-        age = request.form.get('age')
-        gender = request.form.get('gender')
-        native_language = request.form.get('native_language')
-        learn_languages = request.form.getlist('learn_languages')  # Multi-selection
-        learning_reason = request.form.getlist('learning_reason')  # Multi-selection
-        location = request.form.get('location')
-        role = request.form.get('role')
-        availability_from = request.form.get('availability_from')
-        availability_to = request.form.get('availability_to')
-        available_days = request.form.getlist('available_days')  # Multi-selection
+        # Collect user details from form
+        user_data = {
+            "email": email,
+            "password": password,  
+            "name": request.form.get('name'),
+            "phone": request.form.get('phone'),
+            "age": request.form.get('age'),
+            "gender": request.form.get('gender'),
+            "native_language": request.form.get('native_language'),
+            "learn_languages": request.form.getlist('learn_languages'),  # Multi-selection
+            "learning_reason": request.form.getlist('learning_reason'),  # Multi-selection
+            "location": request.form.get('location'),
+            "role": request.form.get('role'),
+            "availability_from": request.form.get('availability_from'),
+            "availability_to": request.form.get('availability_to'),
+            "available_days": request.form.getlist('available_days')  # Multi-selection
+        }
 
-        # Save all data to Firestore
-        firestore_db.add_user(email, password, name, phone, age, gender, native_language, learn_languages, learning_reason, location, role, availability_from, availability_to, available_days)
+        # Save user data to Firestore
+        firestore_db.add_user(user_data)
 
-        return redirect(url_for('home'))  # Redirect to home or dashboard
+        return redirect(url_for('home'))  # Redirect to home
 
     return render_template('signup2.html')
 

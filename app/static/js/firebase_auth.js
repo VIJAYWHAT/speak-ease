@@ -55,7 +55,7 @@ window.getUserName = async function () {
                 document.getElementById("user-name").textContent = "User";
             }
         } else {
-            window.location.href = "/login"; // Redirect to login if not signed in
+            window.location.href = "/login";
         }
     });
 };
