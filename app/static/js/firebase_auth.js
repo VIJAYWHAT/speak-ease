@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyATlfn28N-zL2iW4v84zow3PRb-cPnQ3IM",
@@ -33,6 +33,8 @@ window.googleSignIn = async function () {
         }, { merge: true });
 
         console.log("User signed in and saved:", user);
+        
+        // Redirect to home after sign-in
         window.location.href = "/home";
     } catch (error) {
         console.error("Error signing in:", error);
@@ -40,3 +42,20 @@ window.googleSignIn = async function () {
     }
 };
 
+// Fetch user name after login
+window.getUserName = async function () {
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+
+            if (userSnap.exists()) {
+                document.getElementById("user-name").textContent = userSnap.data().name;
+            } else {
+                document.getElementById("user-name").textContent = "User";
+            }
+        } else {
+            window.location.href = "/login"; // Redirect to login if not signed in
+        }
+    });
+};
