@@ -119,4 +119,15 @@ input, select {
   .form-section {
     width: 100%;
   }
+  h1 {
+    margin-top: 350px;
+    font-size: 20px;
+  }
+  .radio-group {
+    padding-right: 0px;
+  }
+  .learn-group {
+    display: span;
+  }
+;
 }
