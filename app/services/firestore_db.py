@@ -20,9 +20,21 @@ def get_qoutes():
     return 'Guest'
 
 
-def add_user(email, password):
+def add_user(email, password, name, phone, age, gender, native_language, learn_languages, learning_reason, location, role, availability_from, availability_to, available_days):
     users_ref = db.collection('users')
     users_ref.add({
         'email': email,
-        'password': password 
+        'password': password,  # Consider hashing for security
+        'name': name,
+        'phone': phone,
+        'age': age,
+        'gender': gender,
+        'native_language': native_language,
+        'learn_languages': learn_languages,  # Stored as an array
+        'learning_reason': learning_reason,  # Stored as an array
+        'location': location,
+        'role': role,
+        'availability_from': availability_from,
+        'availability_to': availability_to,
+        'available_days': available_days  # Stored as an array
     })

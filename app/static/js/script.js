@@ -66,3 +66,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   
+
+  function toggleSelection(button) {
+    button.classList.toggle("selected");
+    updateHiddenFields();
+}
+
+function updateHiddenFields() {
+    document.getElementById("learning_languages").value = 
+        Array.from(document.querySelectorAll(".learn-group button.selected[data-value]"))
+            .map(btn => btn.getAttribute("data-value")).join(",");
+
+    document.getElementById("learning_reason").value = 
+        Array.from(document.querySelectorAll(".reason-group button.selected[data-value]"))
+            .map(btn => btn.getAttribute("data-value")).join(",");
+
+    document.getElementById("days").value = 
+        Array.from(document.querySelectorAll(".days-group button.selected[data-value]"))
+            .map(btn => btn.getAttribute("data-value")).join(",");
+}
