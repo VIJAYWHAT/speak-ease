@@ -13,40 +13,33 @@
     </div>
     <div class="container">
       <h2>Login</h2>
-      <form>
+      <form id="login-form" action="{{ url_for('login') }}" method="POST">
         <label for="contact">Email / Phone number</label>
-        <input
-          type="text"
-          id="contact"
-          placeholder="Enter your Email or Phone number"
-          required
-        />
-        <p
-          id="error-message"
-          style="color: red; font-size: 14px; display: none"
-        >
-          Please enter a valid email or phone number.
-        </p>
-
+        <input type="text" id="contact" name="contact" placeholder="Enter your Email or Phone number" required/>
+        
         <label for="password">Password</label>
         <div class="password-field">
-          <input
-            type="password"
-            id="password"
-            placeholder="Enter the password"
-            required
-          />
-          <span class="toggle-password"></span>
+            <input type="password" id="password" name="password" placeholder="Enter the password" required/>
         </div>
 
-        <button type="submit">Submit</button>
-      </form>
+        {% if error %}
+            <p class="error-message" style="display: block;">{{ error }}</p>
+        {% endif %}
+
+        <button id="login-button" type="submit">Login</button>
+        <div class="loading-spinner" id="loading-spinner"></div>
+    </form>
+
       <p class="or">- Or -</p>
-      <button class="google-btn">
-        <img src="img/google.png" alt="Google Logo" />
+      <button onclick="googleSignIn()" class="google-btn">
+        <img
+          src="{{url_for('static', filename='images/google.png')}}"
+          alt="Google Logo"
+        />
         Google
       </button>
     </div>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/firebase_auth.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
   </body>
 </html>

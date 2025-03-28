@@ -38,3 +38,15 @@ def add_user(email, password, name, phone, age, gender, native_language, learn_l
         'availability_to': availability_to,
         'available_days': available_days  # Stored as an array
     })
+
+def authenticate_user(contact, password):
+    users_ref = db.collection('users')
+    users = users_ref.stream()  # Get all documents in users collection
+
+    for user in users:
+        user_data = user.to_dict()
+        
+        if (user_data.get('email') == contact or user_data.get('phone') == contact) and user_data.get('password') == password:
+            return user_data 
+
+    return None # No matching user found

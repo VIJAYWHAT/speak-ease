@@ -85,3 +85,13 @@ function updateHiddenFields() {
         Array.from(document.querySelectorAll(".days-group button.selected[data-value]"))
             .map(btn => btn.getAttribute("data-value")).join(",");
 }
+
+document.getElementById("login-form").addEventListener("submit", function() {
+  let button = document.getElementById("login-button");
+  let spinner = document.getElementById("loading-spinner");
+
+  // Show the spinner and disable the button
+  spinner.style.display = "block";
+  button.classList.add("disabled");
+  button.disabled = true;
+});

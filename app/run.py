@@ -27,11 +27,25 @@ def dashboard():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    username = session.get('username', 'Guest')
+    return render_template('home.html', username=username)
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    if request.method == 'POST':
+        contact = request.form.get('contact')
+        password = request.form.get('password')
+
+        # Check Firestore for matching user
+        user = firestore_db.authenticate_user(contact, password)
+
+        if user:
+            session['username'] = user['name']
+            return redirect(url_for('home'))
+        else:
+            return render_template('login.html', error="Invalid credentials. Please try again.")
+
+    return render_template('login.html', error=None)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
