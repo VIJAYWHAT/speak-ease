@@ -1,6 +1,6 @@
 # SpeakEase By Tech Spartans
 
-![SpeakEase](https://speak-ease.onrender.com/) is a collaborative learning platform that helps users track and manage their language learning progress. It integrates Firebase Firestore for real-time data storage and Firebase Authentication for user management.
+[SpeakEase](https://speak-ease.onrender.com/) is a collaborative learning platform that helps users track and manage their language learning progress. It integrates Firebase Firestore for real-time data storage and Firebase Authentication for user management.
 
 ## Features
 - User authentication (Email/Password, Google Sign-In)
