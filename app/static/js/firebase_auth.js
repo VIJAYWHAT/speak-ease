@@ -24,6 +24,7 @@ window.googleSignIn = async function () {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
+        // Save user details in Firestorse
         await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
             email: user.email,
@@ -32,15 +33,33 @@ window.googleSignIn = async function () {
             createdAt: serverTimestamp()
         }, { merge: true });
 
-        console.log("User signed in and saved:", user);
-        
-        // Redirect to home after sign-in
-        window.location.href = "/home";
+        console.log("User signed in:", user);
+
+        // Send user email to backend to store in session
+        const response = await fetch("/set_session", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: user.email,
+                name: user.displayName
+            }),
+        });
+
+        if (response.ok) {
+            console.log("Session updated in Flask.");
+            window.location.href = "/home";  // Redirect to home after login
+        } else {
+            console.error("Failed to update session.");
+            alert("Login failed on server side.");
+        }
     } catch (error) {
         console.error("Error signing in:", error);
         alert("Google Sign-In failed!");
     }
 };
+
 
 // Fetch user name after login
 window.getUserName = async function () {
@@ -54,8 +73,11 @@ window.getUserName = async function () {
             } else {
                 document.getElementById("user-name").textContent = "User";
             }
+            console.log("User is logged in:", user);
+            window.location.href = "/home";  // Ensure they go to home
         } else {
-            window.location.href = "/login";
+            // window.location.href = "/login";
+            console.log("No user is signed in.");
         }
     });
 };

@@ -32,9 +32,12 @@ def dashboard():
 
 @app.route('/home')
 def home():
-    if 'email' not in session:
-        return redirect(url_for('login'))  # Redirect if session email is missing
-
+    if "email" not in session:
+        return redirect(url_for("login"))  # Check if email is in session
+    
+    print("Session data:", session)  
+    print(f"Welcome {session['name']}! Your email: {session['email']}")
+    
     email = session['email']  # 🔹 Get email from session
 
     # Fetch user document from Firestore
@@ -44,9 +47,9 @@ def home():
     for user in users_ref:
         user_data = user.to_dict()
         break  # Since email is unique, take the first match
-
+    
     if not user_data or "learn_languages" not in user_data:
-        return "User not found or no courses available!"
+        return "no courses available!"
 
     # Extract course IDs from the user document
     course_ids = user_data["learn_languages"]
@@ -87,6 +90,19 @@ def home():
             })
         
     return render_template('home.html', username=user_data['name'], email=email, courses=courses_data, video_classes=upcoming_classes)
+
+@app.route("/set_session", methods=["POST"])
+def set_session():
+    data = request.get_json()
+    if "email" in data:
+        session["email"] = data["email"]  # Store email in session
+        session["name"] = data.get("name", "User")  # Optional: Store name
+        return jsonify({"message": "Session updated"}), 200
+    return jsonify({"error": "Invalid data"}), 400
+
+@app.route("/check_session")
+def check_session():
+    return jsonify(dict(session))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
