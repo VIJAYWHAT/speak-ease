@@ -23,6 +23,7 @@ db = firestore.client()
 
 @app.route('/')
 def landing():
+    
     qoutes = firestore_db.get_qoutes()
     return render_template('index.html', qoutes = qoutes)
 
@@ -33,12 +34,9 @@ def dashboard():
 @app.route('/home')
 def home():
     if "email" not in session:
-        return redirect(url_for("login"))  # Check if email is in session
-    
-    print("Session data:", session)  
-    print(f"Welcome {session['name']}! Your email: {session['email']}")
-    
-    email = session['email']  # 🔹 Get email from session
+        return redirect(url_for("login"))
+
+    email = session['email'] 
 
     # Fetch user document from Firestore
     users_ref = db.collection("users").where("email", "==", email).stream()
@@ -46,14 +44,16 @@ def home():
 
     for user in users_ref:
         user_data = user.to_dict()
-        break  # Since email is unique, take the first match
-    
-    if not user_data or "learn_languages" not in user_data:
-        return "no courses available!"
+        break 
 
-    # Extract course IDs from the user document
-    course_ids = user_data["learn_languages"]
-    progress_data = user_data.get("progress", {})  # 🔹 Extract progress map
+    if not user_data:
+        return "User data not found!"
+
+    if "learning_reason" not in user_data or not user_data["learning_reason"]:
+        return redirect(url_for("signup2"))
+
+    course_ids = user_data.get("learn_languages", [])
+    progress_data = user_data.get("progress", {})
 
     courses_data = []
     for course_id in course_ids:
@@ -63,22 +63,19 @@ def home():
             courses_data.append({
                 "id": course_id,
                 "name": course_dict.get("name", "Unknown"),
-                "progress": progress_data.get(course_id, "0"),  # 🔹 Get progress from map
+                "progress": progress_data.get(course_id, "0"),
                 "desc": course_dict.get("desc", "No description available")
             })
-    
+
     # Fetch video classes details
     now = datetime.now()
     classes_ref = db.collection('videoclass')
     docs = classes_ref.stream()
+
     upcoming_classes = []
-    
     for doc in docs:
         data = doc.to_dict()
-        
         class_time = datetime.strptime(data['datetime'], "%d-%m-%Y %H:%M")
-        print(f"Class time: {class_time}, Current time: {now}") 
-        
         if class_time > now:
             upcoming_classes.append({
                 'title': data['title'],
@@ -86,8 +83,14 @@ def home():
                 'link': data['link'],
                 'tutor_name': data['tutor_name']
             })
-        
-    return render_template('home.html', username=user_data['name'], email=email, courses=courses_data, video_classes=upcoming_classes)
+
+    return render_template(
+        'home.html',
+        username=user_data['name'],
+        email=email,
+        courses=courses_data,
+        video_classes=upcoming_classes
+    )
 
 @app.route("/set_session", methods=["POST"])
 def set_session():
@@ -153,13 +156,13 @@ def signup2():
             "age": request.form.get('age'),
             "gender": request.form.get('gender'),
             "native_language": request.form.get('native_language'),
-            "learn_languages": request.form.getlist('learn_languages'),  # Multi-selection
-            "learning_reason": request.form.getlist('learning_reason'),  # Multi-selection
+            "learn_languages": request.form.getlist('learn_languages'), 
+            "learning_reason": request.form.getlist('learning_reason'),  
             "location": request.form.get('location'),
             "role": request.form.get('role'),
             "availability_from": request.form.get('availability_from'),
             "availability_to": request.form.get('availability_to'),
-            "available_days": request.form.getlist('available_days')  # Multi-selection
+            "available_days": request.form.getlist('available_days') 
         }
 
         # Save user data to Firestore

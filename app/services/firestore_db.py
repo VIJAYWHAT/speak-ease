@@ -24,10 +24,25 @@ def get_qoutes():
 
 
 def add_user(user_data):
-    users_ref = db.collection('users')
-    users_ref.add(user_data)
-    session['username'] = user_data['name']
-    print("User added successfully!")
+    users_ref = db.collection("users").where("email", "==", user_data["email"]).stream()
+    user_doc_id = None
+
+   
+    for user in users_ref:
+        user_doc_id = user.id  # Get Firestore document ID
+        break
+
+    if user_doc_id:
+        # Update existing user document
+        db.collection("users").document(user_doc_id).update(user_data)
+        print(f"Updated existing user: {user_data['email']}")
+    else:
+        # Create new user document
+        db.collection("users").add(user_data)
+        print(f"Added new user: {user_data['email']}")
+
+    session['username'] = user_data.get('name', 'User')
+
 
 def authenticate_user(contact, password):
     users_ref = db.collection('users')
