@@ -68,11 +68,9 @@ def home():
             })
     
     # Fetch video classes details
-    now = datetime.now()  # Get current time
-
+    now = datetime.now()
     classes_ref = db.collection('videoclass')
     docs = classes_ref.stream()
-
     upcoming_classes = []
     
     for doc in docs:
@@ -96,7 +94,7 @@ def set_session():
     data = request.get_json()
     if "email" in data:
         session["email"] = data["email"]  # Store email in session
-        session["name"] = data.get("name", "User")  # Optional: Store name
+        session["name"] = data.get("name", "User")
         return jsonify({"message": "Session updated"}), 200
     return jsonify({"error": "Invalid data"}), 400
 
@@ -110,13 +108,12 @@ def login():
         contact = request.form.get('contact')
         password = request.form.get('password')
 
-        # Check Firestore for matching user
         user = firestore_db.authenticate_user(contact, password)
 
         if user:
             session['username'] = user['name']
-            session['email'] = user['email']  # 🔹 Store email in session
-            return redirect(url_for('home'))  # 🔹 No need to pass email in URL
+            session['email'] = user['email']  
+            return redirect(url_for('home'))
         else:
             return render_template('login.html', error="Invalid credentials. Please try again.")
 
@@ -140,14 +137,14 @@ def signup():
 @app.route('/signup2', methods=['GET', 'POST'])
 def signup2():
     if request.method == 'POST':
-        # Get stored email and password from session
+        
         email = session.get('email')
         password = session.get('password')
 
-        if not email or not password:
-            return redirect(url_for('signup'))  # Redirect back if session expired
+        if not email:
+            return redirect(url_for('signup'))
 
-        # Collect user details from form
+        
         user_data = {
             "email": email,
             "password": password,  
@@ -168,7 +165,7 @@ def signup2():
         # Save user data to Firestore
         firestore_db.add_user(user_data)
 
-        return redirect(url_for('home'))  # Redirect to home
+        return redirect(url_for('home')) 
 
     return render_template('signup2.html')
 

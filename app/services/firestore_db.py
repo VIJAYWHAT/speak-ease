@@ -39,4 +39,4 @@ def authenticate_user(contact, password):
         if (user_data.get('email') == contact or user_data.get('phone') == contact) and user_data.get('password') == password:
             return user_data 
 
-    return None # No matching user found
+    return None
