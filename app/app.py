@@ -18,7 +18,7 @@ if not firebase_admin._apps:
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 CORS(app)
-app.secret_key = "your_secret_key"
+app.secret_key = "secure_secret_key"
 db = firestore.client()
 
 @app.route('/')
@@ -91,19 +91,6 @@ def home():
         courses=courses_data,
         video_classes=upcoming_classes
     )
-
-@app.route("/set_session", methods=["POST"])
-def set_session():
-    data = request.get_json()
-    if "email" in data:
-        session["email"] = data["email"]  # Store email in session
-        session["name"] = data.get("name", "User")
-        return jsonify({"message": "Session updated"}), 200
-    return jsonify({"error": "Invalid data"}), 400
-
-@app.route("/check_session")
-def check_session():
-    return jsonify(dict(session))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -225,6 +212,19 @@ def get_quiz():
 @app.route('/chat')
 def chat():
     return render_template('chat.html')
+
+@app.route("/set_session", methods=["POST"])
+def set_session():
+    data = request.get_json()
+    if "email" in data:
+        session["email"] = data["email"]  # Store email in session
+        session["name"] = data.get("name", "User")
+        return jsonify({"message": "Session updated"}), 200
+    return jsonify({"error": "Invalid data"}), 400
+
+@app.route("/check_session")
+def check_session():
+    return jsonify(dict(session))
 
 @app.route('/logout')
 def logout():
