@@ -50,7 +50,7 @@ header {
     font-size: 24px;
 }
 
-.profile, .notification {
+.profile {
     background: #005bb5;
     padding: 15px;
     border-radius: 50%;
@@ -65,6 +65,23 @@ header {
     position: relative;
     font-size: 24px;
 }
+
+.notification {
+    background: #005bb5;
+    padding: 15px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    position: relative;
+    font-size: 24px;
+}
+
 .profile i, .score i, .notification i {
     font-size: 20px;
 }
@@ -332,4 +349,39 @@ a{
 
 .class-list p {
     color: #555;
+}
+
+.profile-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    width: 120px;
+    text-align: left;
+    z-index: 1000;
+}
+
+.profile-dropdown a {
+    display: block;
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.profile-dropdown a:hover {
+    background: #f0f0f0;
+}
+
+.profile-dropdown.show {
+    display: block;
 }
