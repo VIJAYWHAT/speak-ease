@@ -5,6 +5,8 @@ from services import firestore_db
 from flask_cors import CORS
 import os
 from datetime import datetime
+import json
+
 
 
 if os.getenv("RENDER"):
@@ -49,7 +51,7 @@ def home():
     if not user_data:
         return "User data not found!"
 
-    if "learning_reason" not in user_data or not user_data["learning_reason"]:
+    if "learn_languages" not in user_data or not user_data["learn_languages"]:
         return redirect(url_for("signup2"))
 
     course_ids = user_data.get("learn_languages", [])
@@ -127,14 +129,17 @@ def signup():
 @app.route('/signup2', methods=['GET', 'POST'])
 def signup2():
     if request.method == 'POST':
-        
+        # Get stored email and password from session
         email = session.get('email')
         password = session.get('password')
 
-        if not email:
-            return redirect(url_for('signup'))
+        if not email or not password:
+            return redirect(url_for('signup'))  # Redirect back if session expired
 
-        
+        # 🔹 Convert JSON string back to a Python list
+        learn_languages = json.loads(request.form.get('learn_languages', '[]'))
+        learning_reason = json.loads(request.form.get('learning_reason', '[]'))
+
         user_data = {
             "email": email,
             "password": password,  
@@ -143,21 +148,21 @@ def signup2():
             "age": request.form.get('age'),
             "gender": request.form.get('gender'),
             "native_language": request.form.get('native_language'),
-            "learn_languages": request.form.getlist('learn_languages'), 
-            "learning_reason": request.form.getlist('learning_reason'),  
+            "learn_languages": learn_languages,  
+            "learning_reason": learning_reason, 
             "location": request.form.get('location'),
             "role": request.form.get('role'),
             "availability_from": request.form.get('availability_from'),
             "availability_to": request.form.get('availability_to'),
-            "available_days": request.form.getlist('available_days') 
+            "available_days": request.form.getlist('available_days')
         }
 
-        # Save user data to Firestore
         firestore_db.add_user(user_data)
 
-        return redirect(url_for('home')) 
+        return redirect(url_for('home'))  # Redirect to home
 
     return render_template('signup2.html')
+
 
 
 @app.route('/get_lessons')

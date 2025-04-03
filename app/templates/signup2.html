@@ -100,31 +100,35 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const learnButtons = document.querySelectorAll(".learn-btn");
-      const reasonButtons = document.querySelectorAll(".reason-btn");
-      const learnInput = document.getElementById("learnLanguagesInput");
-      const reasonInput = document.getElementById("learningReasonInput");
+        const learnButtons = document.querySelectorAll(".learn-btn");
+        const reasonButtons = document.querySelectorAll(".reason-btn");
+        const learnInput = document.getElementById("learnLanguagesInput");
+        const reasonInput = document.getElementById("learningReasonInput");
 
-      function toggleSelection(button, inputField) {
-        button.classList.toggle("selected");
-        const selectedValues = Array.from(button.parentElement.children)
-          .filter(btn => btn.classList.contains("selected"))
-          .map(btn => btn.getAttribute("data-value"));
-        inputField.value = selectedValues.join(",");
-      }
+        function toggleSelection(button, inputField) {
+            button.classList.toggle("selected");
 
-      learnButtons.forEach(button => {
-        button.addEventListener("click", function () {
-          toggleSelection(button, learnInput);
+            // Store values as a proper array (space-separated instead of comma-separated)
+            const selectedValues = Array.from(button.parentElement.children)
+                .filter(btn => btn.classList.contains("selected"))
+                .map(btn => btn.getAttribute("data-value"));
+
+            inputField.value = JSON.stringify(selectedValues);  // 🔹 Store as JSON array
+        }
+
+        learnButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                toggleSelection(button, learnInput);
+            });
         });
-      });
 
-      reasonButtons.forEach(button => {
-        button.addEventListener("click", function () {
-          toggleSelection(button, reasonInput);
+        reasonButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                toggleSelection(button, reasonInput);
+            });
         });
-      });
     });
+
   </script>
 
 
