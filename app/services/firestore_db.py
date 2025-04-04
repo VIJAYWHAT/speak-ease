@@ -38,8 +38,11 @@ def add_user(user_data):
         print(f"Updated existing user: {user_data['email']}")
     else:
         # Create new user document
-        db.collection("users").add(user_data)
-        print(f"Added new user: {user_data['email']}")
+        new_doc_ref = db.collection("users").document()
+        user_data["uid"] = new_doc_ref.id
+        new_doc_ref.set(user_data) 
+        print(f"Added new user: {user_data['email']} with UID: {new_doc_ref.id}")
+
 
     session['username'] = user_data.get('name', 'User')
 

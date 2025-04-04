@@ -23,7 +23,7 @@ db = firestore.client()
 
 @app.route('/')
 def landing():
-    
+    session.clear()
     qoutes = firestore_db.get_qoutes()
     return render_template('index.html', qoutes = qoutes)
 
@@ -231,6 +231,7 @@ def check_session():
 
 @app.route('/logout')
 def logout():
+    session.clear()
     return redirect(url_for('landing'))
 
 
