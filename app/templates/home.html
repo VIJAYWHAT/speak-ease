@@ -17,17 +17,17 @@
             <h1>Speak Ease</h1>
         </div>
         <nav class="nav-buttons">
-            <button class="score video-class-btn" onclick="openVideoModal()">
-                <img class='msg-img' src="{{ url_for('static', filename='images/World_Video.png')}}" alt="Msg">
+            <button class="video-class-btn" onclick="openVideoModal()">
+                <img class='vc-logo' src="{{ url_for('static', filename='images/World_Video.png')}}" alt="Video class">
             </button>
-            <button class="score" onclick="openAIModal()">
-                <img class='msg-img' src="{{ url_for('static', filename='images/Ai.png')}}" alt="Msg">
+            <button class="ai-btn" onclick="openAIModal()">
+                <img class='ai-logo' src="{{ url_for('static', filename='images/Ai.png')}}" alt="Msg">
             </button>
-            <a href="{{ url_for('chat') }}" class="notification"> <img class='msg-img' src="{{ url_for('static', filename='images/msg-ic.jpg')}}" alt="Msg">
+            <a href="{{ url_for('chat') }}" class="chat-btn"> <img class='chat-logo' src="{{ url_for('static', filename='images/msg-ic.jpg')}}" alt="Msg">
             </a>
             <div class="profile-container">
                 <button class="profile" id="profile-btn">
-                    <img class="prof-img" src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile">
+                    <img class="prof-logo" src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile">
                 </button>
             
                 <div class="profile-dropdown" id="profile-dropdown">
@@ -64,7 +64,7 @@
         <!-- Quiz Popup -->
         <div id="quiz-popup" class="quiz-modal">
             <div class="quiz-content">
-                <span id="close-quiz">X</span>
+                <span id="close-quiz">x</span>
                 <h2 id="quiz-question">Loading...</h2>
                 <div id="quiz-options"></div>
                 <button id="submit-answer">Submit</button>
@@ -73,7 +73,7 @@
 
         <!-- AI Chatbot Modal -->
         <div class="modal" id="aiModal">
-            <span class="close" onclick="closeAIModal()">&times;</span>
+            <span class="close-ai" onclick="closeAIModal()">&times;</span>
             <iframe src="https://www.ibm.com/granite/playground/" allow="microphone;"></iframe>
         </div>
         <!-- Answer Popup -->

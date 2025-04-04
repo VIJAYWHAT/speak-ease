@@ -1,13 +1,11 @@
-from flask import Flask, redirect, render_template, request, jsonify, url_for, session
-import firebase_admin
-from firebase_admin import credentials, auth,  firestore
-from services import firestore_db
-from flask_cors import CORS
 import os
-from datetime import datetime
 import json
-
-
+import firebase_admin
+from flask_cors import CORS
+from datetime import datetime
+from services import firestore_db
+from firebase_admin import credentials, auth,  firestore
+from flask import Flask, redirect, render_template, request, jsonify, url_for, session
 
 if os.getenv("RENDER"):
     cred = credentials.Certificate("/etc/secrets/speak-ease-key.json")
