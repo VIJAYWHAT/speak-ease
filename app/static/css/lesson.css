@@ -70,10 +70,7 @@ h1 {
     background: white;
     border-bottom: 2px solid #ccc;
   }
-  
-  .logo {
-    font-weight: bold;
-  }
+
   
   .menu-btn {
     background: none;
@@ -81,8 +78,7 @@ h1 {
     font-size: 24px;
     cursor: pointer;
   }
-  
-  /* Buttons - Positioned at the Top Right */
+
   .buttons {
     position: absolute;
     top: 15px;
