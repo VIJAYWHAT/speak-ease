@@ -23,9 +23,12 @@ db = firestore.client()
 
 @app.route('/')
 def landing():
-    session.clear()
-    qoutes = firestore_db.get_qoutes()
-    return render_template('index.html', qoutes = qoutes)
+    if "email" in session:
+        return redirect(url_for("home"))   
+    else:
+        qoutes = firestore_db.get_qoutes()
+        return render_template('index.html', qoutes = qoutes)
+   
 
 @app.route('/dashboard')
 def dashboard():
@@ -88,6 +91,7 @@ def home():
         'home.html',
         username=user_data['name'],
         email=email,
+        uid=user_data['uid'],
         courses=courses_data,
         video_classes=upcoming_classes
     )

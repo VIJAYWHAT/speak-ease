@@ -24,5 +24,11 @@
         </div>
     </div>
 
+    <script>
+        const storedUid = localStorage.getItem("user_uid");
+            if (storedUid) {
+                window.location.href = "/home";
+            }
+    </script>
 </body>
 </html>

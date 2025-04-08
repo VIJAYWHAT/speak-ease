@@ -32,7 +32,7 @@
             
                 <div class="profile-dropdown" id="profile-dropdown">
                     <a href="{{ url_for('profile') }}">Profile</a>
-                    <a href="{{ url_for('logout') }}">Logout</a>
+                    <a class="logout" href="{{ url_for('logout') }}">Logout</a>
                 </div>
             </div>
         </nav>
@@ -106,6 +106,10 @@
     
     <!-- JavaScript to Open & Close AI Modal -->
     <script>
+        const userUid = "{{ uid }}";
+        if (userUid) {
+            localStorage.setItem("user_uid", userUid);
+        }
         function openAIModal() {
             document.getElementById("aiModal").style.display = "block";
         }
@@ -121,8 +125,6 @@
         function closeVideoClass() {
             document.getElementById("videoClassModal").style.display = "none";
         }
-
-        document.querySelector('.video-class-btn').addEventListener('click', openVideoClass);
 
         document.addEventListener("DOMContentLoaded", function () {
             const profileBtn = document.getElementById("profile-btn");
@@ -140,6 +142,16 @@
                 }
             });
         });
+
+        document.querySelector('.video-class-btn').addEventListener('click', openVideoClass);
+
+        document.querySelector('.logout').addEventListener('click', function() {
+            removeUid();
+        });
+        
+        function removeUid() {
+            localStorage.removeItem("user_uid");
+        }
     </script>
 </body>
 </html>
