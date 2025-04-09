@@ -120,7 +120,6 @@ def signup():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        # Store email & password in session for next page
         session['email'] = email
         session['password'] = password
         
@@ -136,9 +135,9 @@ def signup2():
         password = session.get('password')
 
         if not email or not password:
-            return redirect(url_for('signup'))  # Redirect back if session expired
+            return redirect(url_for('signup'))
 
-        # 🔹 Convert JSON string back to a Python list
+        # Convert JSON string back to a Python list
         learn_languages = json.loads(request.form.get('learn_languages', '[]'))
         learning_reason = json.loads(request.form.get('learning_reason', '[]'))
 
@@ -161,7 +160,7 @@ def signup2():
 
         firestore_db.add_user(user_data)
 
-        return redirect(url_for('home'))  # Redirect to home
+        return redirect(url_for('home'))
 
     return render_template('signup2.html')
 
@@ -213,7 +212,7 @@ def get_quiz():
             quiz_data.get("option3", ""),
             quiz_data.get("option4", "")
         ],
-        "correct_answer": quiz_data.get("correct_answer", "")  # This will be (option1, option3)
+        "correct_answer": quiz_data.get("correct_answer", "") 
     })
 
 @app.route('/chat')
@@ -237,7 +236,6 @@ def check_session():
 def logout():
     session.clear()
     return redirect(url_for('landing'))
-
 
 if __name__ == '__main__':
     app.run(debug=True)
