@@ -30,7 +30,7 @@
                     <h2>{{ user.name }}</h2>
                     <p>Email: {{ user.email }}</p>
                     <p>Language: {{ user.learn_languages | join(', ') }}</p>
-                    <p>Progress: {{ user.progress.english }}%</p>
+                    <p>Progress: {{ progress }}%</p>
                     <button>Edit Profile</button>
                 </div>
             </div>
@@ -38,7 +38,7 @@
             <div class="progress-bar">
                 <h3>Learning Progress</h3>
                 <div class="progress">
-                    <div class="progress-bar-filled" style="width: {{ user.progress.hindi }}%;"></div>
+                    <div class="progress-bar-filled" style="width: {{ progress }}%;"></div>
                 </div>
             </div>
             

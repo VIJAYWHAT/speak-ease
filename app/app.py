@@ -205,15 +205,13 @@ def profile():
     # Compute average progress
     progress_map = user_data.get('progress', {})
     progress_values = [int(value) for value in progress_map.values()]
-    print(f"Progress values: {progress_values}")  # Debugging line
     average_progress = sum(progress_values) / len(progress_values) if progress_values else 0
-    print(f"Average progress: {average_progress}")
     
 
     return render_template(
         'profile.html',
         user=user_data,
-        average_progress=round(average_progress, 2)
+        progress=round(average_progress, 2)
     )
 
 
