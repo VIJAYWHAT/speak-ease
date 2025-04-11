@@ -57,6 +57,7 @@ def home():
 
     course_ids = user_data.get("learn_languages", [])
     progress_data = user_data.get("progress", {})
+    session['uid'] = user_data['uid']
 
     courses_data = []
     for course_id in course_ids:
@@ -189,7 +190,32 @@ def get_lessons():
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    uid = session.get('uid')
+    if not uid:
+        return redirect(url_for('login'))
+    
+    user_ref = db.collection("users").document(uid)
+    user_doc = user_ref.get()
+    
+    if not user_doc.exists:
+        return "User not found", 404
+    
+    user_data = user_doc.to_dict()
+    
+    # Compute average progress
+    progress_map = user_data.get('progress', {})
+    progress_values = [int(value) for value in progress_map.values()]
+    print(f"Progress values: {progress_values}")  # Debugging line
+    average_progress = sum(progress_values) / len(progress_values) if progress_values else 0
+    print(f"Average progress: {average_progress}")
+    
+
+    return render_template(
+        'profile.html',
+        user=user_data,
+        average_progress=round(average_progress, 2)
+    )
+
 
 @app.route('/lesson_page')
 def lesson_page():

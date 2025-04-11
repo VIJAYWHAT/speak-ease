@@ -22,17 +22,15 @@
         </div>
     </header>
     
-    
-    
     <section class="profile">
         <div class="container">
             <div class="profile-header">
                 <img src="{{ url_for('static', filename='images/profile.png')}}" alt="Profile Picture" class="profile-pic">
                 <div class="profile-info">
-                    <h2>Vijay R</h2>
-                    <p>Email: vijayrv042@gmail.co</p>
-                    <p>Language: English, Spanish, Hindi, French</p>
-                    <p>Progress: 80%</p>
+                    <h2>{{ user.name }}</h2>
+                    <p>Email: {{ user.email }}</p>
+                    <p>Language: {{ user.learn_languages | join(', ') }}</p>
+                    <p>Progress: {{ user.progress.english }}%</p>
                     <button>Edit Profile</button>
                 </div>
             </div>
@@ -40,18 +38,18 @@
             <div class="progress-bar">
                 <h3>Learning Progress</h3>
                 <div class="progress">
-                    <div class="progress-bar-filled" style="width: 72%;"></div>
+                    <div class="progress-bar-filled" style="width: {{ user.progress.hindi }}%;"></div>
                 </div>
             </div>
             
             <div class="course-list">
                 <h3>Courses In Progress</h3>
                 <ul>
-                    <li>English - Level 2</li>
-                    <li>Spanish  - Level 1</li>
-                    <li>Tamil - Level 1</li>
-                    <li>Hindi - Level 3</li>
-                </ul>
+                    {% for lang, level in user.progress.items() %}
+                      <li>{{ lang.capitalize() }} - Level {{ loop.index }}</li>
+                    {% endfor %}
+                  </ul>
+                  
             </div>
         </div>
     </section>
