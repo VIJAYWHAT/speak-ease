@@ -15,7 +15,7 @@ else:
 
 if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
-
+        
 app = Flask(__name__, template_folder='templates', static_folder='static')
 CORS(app)
 app.secret_key = "secure_secret_key"
