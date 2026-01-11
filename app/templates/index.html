@@ -1,34 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Speak Ease - Landing Page</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}" type="image/x-icon">
-    <link rel="stylesheet" href="static/css/landing.css">
-</head>
-<body>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/landing.css') }}"
+    />
+  </head>
+  <body>
     <div class="header">
-        <div class="logo"><img src="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}" alt="Logo"></div>
-        <h2>Speak Ease</h2>
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}"
+          alt="Logo"
+        />
+      </div>
+      <h2>Speak Ease</h2>
     </div>
     <div class="main-content">
-        <div class="left-section">
-            <h3>Welcome to <br>    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;      Speak Ease.</h3>
-            <img class="placeholder-img" src="{{url_for('static', filename='images/landing-logo.jpg')}}" alt="Speak Ease Image">
-        </div>
-        <div class="right-section">
-            <h1 class="L93Ok">The free, fun, and effective way to learn a language!</h1>
-            <a class="btn btn-primary" href="{{ url_for('signup') }}"> Get Started</a>
-            <a class="btn btn-secondary" href="{{ url_for('login') }}">Login Existing Account</a>
-        </div>
+      <div class="left-section">
+        <h3>
+          Welcome to <br />
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Speak Ease.
+        </h3>
+        <img
+          class="placeholder-img"
+          src="{{url_for('static', filename='images/landing-logo.jpg')}}"
+          alt="Speak Ease Image"
+        />
+      </div>
+      <div class="right-section">
+        <h1 class="L93Ok">
+          The free, fun, and effective way to learn a language!
+        </h1>
+        <a class="btn btn-primary" href="{{ url_for('signup') }}">
+          Get Started</a
+        >
+        <a class="btn btn-secondary" href="{{ url_for('login') }}"
+          >Login Existing Account</a
+        >
+      </div>
     </div>
-
-    <script>
-        const storedUid = localStorage.getItem("user_uid");
-            if (storedUid) {
-                window.location.href = "/home";
-            }
-    </script>
-</body>
+  </body>
 </html>

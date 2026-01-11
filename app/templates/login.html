@@ -4,32 +4,54 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}" type="image/x-icon">
-    <link rel="stylesheet" href="static/css/login.css" />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/login.css') }}"
+    />
   </head>
   <body>
     <div class="logo">
-      <img src="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}" alt="Logo" />
+      <img
+        src="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}"
+        alt="Logo"
+      />
       <a class="brand-name" href="/">Speak Ease</a>
     </div>
     <div class="container">
       <h2>Login</h2>
       <form id="login-form" action="{{ url_for('login') }}" method="POST">
         <label for="contact">Email / Phone number</label>
-        <input type="text" id="contact" name="contact" placeholder="Enter your Email or Phone number" required/>
-        
+        <input
+          type="text"
+          id="contact"
+          name="contact"
+          placeholder="Enter your Email or Phone number"
+          required
+        />
+
         <label for="password">Password</label>
         <div class="password-field">
-            <input type="password" id="password" name="password" placeholder="Enter the password" required/>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter the password"
+            required
+          />
         </div>
 
         {% if error %}
-            <p class="error-message" style="display: block;">{{ error }}</p>
+        <p class="error-message" style="display: block">{{ error }}</p>
         {% endif %}
 
         <button id="login-button" type="submit">Login</button>
         <div class="loading-spinner" id="loading-spinner"></div>
-    </form>
+      </form>
 
       <p class="or">- Or -</p>
       <button onclick="googleSignIn()" class="google-btn">
@@ -40,7 +62,13 @@
         Google
       </button>
     </div>
-    <script type="module" src="{{ url_for('static', filename='js/firebase_auth.js') }}"></script>
-    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/firebase_auth.js') }}"
+    ></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/script.js') }}"
+    ></script>
   </body>
 </html>
