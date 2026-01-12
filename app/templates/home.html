@@ -1,157 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Speak Ease</title>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}" type="image/x-icon">
-    <link rel="stylesheet" href="static/css/home.css" />
-</head>
-<body>
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/home.css') }}"
+    />
+  </head>
+  <body>
     <header>
-        <div class="logo">
-            <img src="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}" alt="Logo">
-        </div>
-        <div class="title-container">
-            <h1>Speak Ease</h1>
-        </div>
-        <nav class="nav-buttons">
-            <button class="video-class-btn" onclick="openVideoModal()">
-                <img class='vc-logo' src="{{ url_for('static', filename='images/online-class.png')}}" alt="Video class">
-            </button>
-            <button class="ai-btn" onclick="openAIModal()">
-                <img class='ai-logo' src="{{ url_for('static', filename='images/ai-logo.png')}}" alt="Msg">
-            </button>
-            <a href="{{ url_for('chat') }}" class="chat-btn"> <img class='chat-logo' src="{{ url_for('static', filename='images/chat-logo.png')}}" alt="Msg">
-            </a>
-            <div class="profile-container">
-                <button class="profile" id="profile-btn">
-                    <img class="profile-logo" src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile">
-                </button>
-            
-                <div class="profile-dropdown" id="profile-dropdown">
-                    <a href="{{ url_for('profile') }}">Profile</a>
-                    <a class="logout" href="{{ url_for('logout') }}">Logout</a>
-                </div>
-            </div>
-        </nav>
-        <div class="menu-icon"><i class="fas fa-bars"></i></div>
-        <button class="quiz-button" id="open-quiz"><i class="fas fa-question-circle"></i> Quiz</button>
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}"
+          alt="Logo"
+        />
+      </div>
+      <div class="title-container">
+        <h1>Speak Ease</h1>
+      </div>
+      <nav class="nav-buttons">
+        <button class="video-class-btn" onclick="openVideoModal()">
+          <img
+            class="vc-logo"
+            src="{{ url_for('static', filename='images/online-class.png')}}"
+            alt="Video class"
+          />
+        </button>
+        <button class="ai-btn" onclick="openAIModal()">
+          <img
+            class="ai-logo"
+            src="{{ url_for('static', filename='images/ai-logo.png')}}"
+            alt="Msg"
+          />
+        </button>
+        <a href="{{ url_for('chat') }}" class="chat-btn">
+          <img
+            class="chat-logo"
+            src="{{ url_for('static', filename='images/chat-logo.png')}}"
+            alt="Msg"
+          />
+        </a>
+        <div class="profile-container">
+          <button class="profile" id="profile-btn">
+            <img
+              class="profile-logo"
+              src="{{ url_for('static', filename='images/profile.png') }}"
+              alt="Profile"
+            />
+          </button>
 
-        <!-- Video Class Modal -->
-        <div class="video-class-modal" id="videoClassModal">
-            <span class="close-video-class" onclick="closeVideoClass()">&times;</span>
-            <h2>Online Video Classes</h2>
-            <div class="class-list">
-                {% for class in video_classes %}
-                <div class="class-card">
-                    <img src="{{ url_for('static', filename='images/video.png') }}" alt="Video Class">
-                    <h3>{{ class.title }}</h3>
-                    <p>{{ class.desc }}</p>
-                    <p><strong>Tutor:</strong> {{ class.tutor_name }}</p>
-                    <a href="{{ class.link }}" target="_blank" class="join-btn">Join Now</a>
-                </div>
-                {% endfor %}
-                
-                {% if video_classes|length == 0 %}
-                <p>No upcoming classes available.</p>
-                {% endif %}
-            </div>
+          <div class="profile-dropdown" id="profile-dropdown">
+            <a href="{{ url_for('profile') }}">Profile</a>
+            <a class="logout" href="{{ url_for('logout') }}">Logout</a>
+          </div>
         </div>
+      </nav>
+      <div class="menu-icon"><i class="fas fa-bars"></i></div>
+      <button class="quiz-button" id="open-quiz">
+        <i class="fas fa-question-circle"></i> Quiz
+      </button>
 
-       
-        <!-- Quiz Popup -->
-        <div id="quiz-popup" class="quiz-modal">
-            <div class="quiz-content">
-                <span id="close-quiz">x</span>
-                <h2 id="quiz-question">Loading...</h2>
-                <div id="quiz-options"></div>
-                <button id="submit-answer">Submit</button>
-            </div>
+      <!-- Video Class Modal -->
+      <div class="video-class-modal" id="videoClassModal">
+        <span class="close-video-class" onclick="closeVideoClass()"
+          >&times;</span
+        >
+        <h2>Online Video Classes</h2>
+        <div class="class-list">
+          {% for class in video_classes %}
+          <div class="class-card">
+            <img
+              src="{{ url_for('static', filename='images/video.png') }}"
+              alt="Video Class"
+            />
+            <h3>{{ class.title }}</h3>
+            <p>{{ class.desc }}</p>
+            <p><strong>Tutor:</strong> {{ class.tutor_name }}</p>
+            <a href="{{ class.link }}" target="_blank" class="join-btn"
+              >Join Now</a
+            >
+          </div>
+          {% endfor %} {% if video_classes|length == 0 %}
+          <p>No upcoming classes available.</p>
+          {% endif %}
         </div>
+      </div>
 
-        <!-- AI Chatbot Modal -->
-        <div class="modal" id="aiModal">
-            <span class="close-ai" onclick="closeAIModal()">&times;</span>
-            <iframe src="https://www.ibm.com/granite/playground/" allow="microphone;"></iframe>
+      <!-- Quiz Popup -->
+      <div id="quiz-popup" class="quiz-modal">
+        <div class="quiz-content">
+          <button
+            type="button"
+            id="close-quiz"
+            class="quiz-close-btn"
+            aria-label="Close"
+          >
+            ×
+          </button>
+          <h2 id="quiz-question" class="quiz-question">Loading...</h2>
+          <div id="quiz-options" class="quiz-options-list"></div>
+          <button type="button" id="submit-answer" class="quiz-submit-btn">
+            Submit
+          </button>
         </div>
-        <!-- Answer Popup -->
-        <div id="result-popup" class="result-modal">
-            <div class="result-content">
-                <p id="result-message"></p>
-            </div>
+      </div>
+
+      <!-- AI Chatbot Modal -->
+      <div class="modal" id="aiModal">
+        <span class="close-ai" onclick="closeAIModal()">&times;</span>
+        <iframe
+          src="https://www.ibm.com/granite/playground/"
+          allow="microphone;"
+        ></iframe>
+      </div>
+      <!-- Answer Popup (correct/wrong after quiz) -->
+      <div id="result-popup" class="result-modal" style="display: none">
+        <div class="result-content">
+          <p id="result-message"></p>
         </div>
+      </div>
     </header>
     <main>
-        
-        <section class="progress-section">
-            {% for course in courses %}
-            <a href="{{ url_for('lesson_page') }}?course_id={{ course.id }}" class="progress-card-link">
-                <div class="progress-card">
-                    <div class="progress-circle">{{ course.progress }}%</div>
-                    <p><i class="fas fa-globe"></i> {{ course.name }}</p>
-                    <p class="description">{{ course.desc }}</p>
-                </div>
-            </a>
-            {% endfor %}
-        </section>
-        
+      <section class="progress-section">
+        {% for course in courses %}
+        <a
+          href="{{ url_for('lesson_page') }}?course_id={{ course.id }}"
+          class="progress-card-link"
+        >
+          <div class="progress-card">
+            <div class="progress-circle">{{ course.progress }}%</div>
+            <p><i class="fas fa-globe"></i> {{ course.name }}</p>
+            <p class="description">{{ course.desc }}</p>
+          </div>
+        </a>
+        {% endfor %}
+      </section>
     </main>
-    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
-    <script type="module" src="{{ url_for('static', filename='js/quiz.js') }}"></script>
-    <style>
-        
-    </style>
-    
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/script.js') }}"
+    ></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/quiz.js') }}"
+    ></script>
+    <style></style>
+
     <!-- JavaScript to Open & Close AI Modal -->
     <script>
-        const userUid = "{{ uid }}";
-        if (userUid) {
-            localStorage.setItem("user_uid", userUid);
-        }
-        function openAIModal() {
-            document.getElementById("aiModal").style.display = "block";
-        }
-    
-        function closeAIModal() {
-            document.getElementById("aiModal").style.display = "none";
-        }
+      const userUid = "{{ uid }}";
+      if (userUid) {
+        localStorage.setItem("user_uid", userUid);
+      }
+      function openAIModal() {
+        document.getElementById("aiModal").style.display = "block";
+      }
 
-        function openVideoClass() {
-            document.getElementById("videoClassModal").style.display = "block";
-        }
+      function closeAIModal() {
+        document.getElementById("aiModal").style.display = "none";
+      }
 
-        function closeVideoClass() {
-            document.getElementById("videoClassModal").style.display = "none";
-        }
+      function openVideoClass() {
+        document.getElementById("videoClassModal").style.display = "block";
+      }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const profileBtn = document.getElementById("profile-btn");
-            const profileDropdown = document.getElementById("profile-dropdown");
+      function closeVideoClass() {
+        document.getElementById("videoClassModal").style.display = "none";
+      }
 
-            profileBtn.addEventListener("click", function (event) {
-                event.stopPropagation();
-                profileDropdown.classList.toggle("show");
-            });
+      document.addEventListener("DOMContentLoaded", function () {
+        const profileBtn = document.getElementById("profile-btn");
+        const profileDropdown = document.getElementById("profile-dropdown");
 
-            // Close dropdown when clicking outside
-            document.addEventListener("click", function (event) {
-                if (!profileBtn.contains(event.target) && !profileDropdown.contains(event.target)) {
-                    profileDropdown.classList.remove("show");
-                }
-            });
+        profileBtn.addEventListener("click", function (event) {
+          event.stopPropagation();
+          profileDropdown.classList.toggle("show");
         });
 
-        document.querySelector('.video-class-btn').addEventListener('click', openVideoClass);
-
-        document.querySelector('.logout').addEventListener('click', function() {
-            removeUid();
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+          if (
+            !profileBtn.contains(event.target) &&
+            !profileDropdown.contains(event.target)
+          ) {
+            profileDropdown.classList.remove("show");
+          }
         });
-        
-        function removeUid() {
-            localStorage.removeItem("user_uid");
-        }
+      });
+
+      document
+        .querySelector(".video-class-btn")
+        .addEventListener("click", openVideoClass);
+
+      document.querySelector(".logout").addEventListener("click", function () {
+        removeUid();
+      });
+
+      function removeUid() {
+        localStorage.removeItem("user_uid");
+      }
     </script>
-</body>
+  </body>
 </html>
