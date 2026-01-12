@@ -4,70 +4,112 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lesson - Speak Ease</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}" type="image/x-icon">
-    <link rel="stylesheet" href="static/css/lesson.css">
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/lesson.css') }}"
+    />
   </head>
   <body>
-    <header>
+    <header class="lesson-header">
+      <a href="{{ url_for('home') }}" class="back-btn" aria-label="Back to home"
+        >← Back</a
+      >
       <a href="{{ url_for('home') }}" class="title">Speak Ease</a>
+      <div class="top-buttons">
+        <a
+          href="https://www.canva.com/design/DAGjBIEzfCA/9OZrqN1IobsmASSlKKqjzA/edit?utm_content=DAGjBIEzfCA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+          target="_blank"
+          rel="noopener"
+          class="tab-btn prn-btn"
+          >Presentation</a
+        >
+        <button type="button" class="tab-btn" onclick="openVideoModal()">
+          Videos
+        </button>
+        <button type="button" class="tab-btn" id="open-quiz">Quiz</button>
+      </div>
     </header>
 
-    <main>
+    <main class="lesson-main">
       <h1 id="section-title">Title</h1>
-      <div class="content-placeholder">
+      <div id="content-placeholder" class="content-placeholder" hidden>
         <div class="line"></div>
       </div>
 
-      <div class="buttons">
-        <a href="https://www.canva.com/design/DAGjBIEzfCA/9OZrqN1IobsmASSlKKqjzA/edit?utm_content=DAGjBIEzfCA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"  target="_blank" class="tab-btn prn-btn">Presentation</a>
-        <button class="tab-btn" onclick="openVideoModal()">Videos</button>
-        <button class="quiz-button" class="tab-btn" id="open-quiz"> Quiz</button>
-      </div>
-
-      <!-- Quiz Popup -->
-      <div id="quiz-popup" class="quiz-modal">
-        <div class="quiz-content">
-            <span id="close-quiz">X</span>
-            <h2 id="quiz-question">Loading...</h2>
-            <div id="quiz-options"></div>
-            <button id="submit-answer">Submit</button>
-        </div>
-    </div>
-
-      <!-- Video Reference Modal -->
-      <div class="video-class-modal" id="videoClassModal">
-        <span class="close-video-class" onclick="closeVideoModal()">&times;</span>
-        <h2>Video Refernces</h2>
-        <div class="class-list">
-          <a href="https://youtu.be/O300_mrHooM?si=kmCZJVwXMLgXHu7c" target="_blank" class="video-link">Video 1</a>
-          <a href="https://youtu.be/JIOk3JSvKp4?si=PBgvAqBUht9yUP8C" target="_blank" class="video-link">Video 2</a>
-          <a href="https://youtu.be/HlZOaWbBDqQ?si=KBZEwUCTavM2iKoI" target="_blank" class="video-link">Video 3</a>
-            
-            
-        </div>
-    </div>
-
-      <div class="navigation">
-        <button id="prev-btn" class="nav-btn">←</button>
-        <button id="next-btn" class="nav-btn">→</button>
+      <div id="lesson-navigation" class="float-nav" hidden>
+        <button type="button" id="prev-btn" class="nav-btn float-nav-btn">
+          ← Previous
+        </button>
+        <button type="button" id="next-btn" class="nav-btn float-nav-btn">
+          Next →
+        </button>
       </div>
     </main>
 
-    <script type="module" src="{{ url_for('static', filename='js/lesson.js') }}"></script>
-    <script type="module" src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+    <!-- Result popup (used after quiz submit) -->
+    <div id="result-popup" class="result-modal" style="display: none">
+      <div class="result-content"><p id="result-message"></p></div>
+    </div>
+
+    <!-- Quiz Popup -->
+    <div id="quiz-popup" class="quiz-modal">
+      <div class="quiz-content">
+        <span id="close-quiz">×</span>
+        <h2 id="quiz-question">Loading...</h2>
+        <div id="quiz-options"></div>
+        <button type="button" id="submit-answer">Submit</button>
+      </div>
+    </div>
+
+    <!-- Video Reference Modal -->
+    <div class="video-class-modal" id="videoClassModal">
+      <span class="close-video-class" onclick="closeVideoModal()">&times;</span>
+      <h2>Video References</h2>
+      <div class="class-list">
+        <a
+          href="https://youtu.be/O300_mrHooM?si=kmCZJVwXMLgXHu7c"
+          target="_blank"
+          rel="noopener"
+          class="video-link"
+          >Video 1</a
+        >
+        <a
+          href="https://youtu.be/JIOk3JSvKp4?si=PBgvAqBUht9yUP8C"
+          target="_blank"
+          rel="noopener"
+          class="video-link"
+          >Video 2</a
+        >
+        <a
+          href="https://youtu.be/HlZOaWbBDqQ?si=KBZEwUCTavM2iKoI"
+          target="_blank"
+          rel="noopener"
+          class="video-link"
+          >Video 3</a
+        >
+      </div>
+    </div>
 
     <script>
-            
       function openVideoModal() {
-          document.getElementById("videoClassModal").style.display = "block";
+        document.getElementById("videoClassModal").style.display = "block";
       }
-
       function closeVideoModal() {
-          document.getElementById("videoClassModal").style.display = "none";
+        document.getElementById("videoClassModal").style.display = "none";
       }
-
-      document.querySelector('.video-class-btn').addEventListener('click', openVideoClass);
     </script>
-
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/lesson.js') }}"
+    ></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/quiz.js') }}"
+    ></script>
   </body>
 </html>

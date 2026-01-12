@@ -1,59 +1,80 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const sectionTitle = document.getElementById("section-title");
-    const contentPlaceholder = document.querySelector(".content-placeholder");
-    const prevBtn = document.getElementById("prev-btn");
-    const nextBtn = document.getElementById("next-btn");
+  const sectionTitle = document.getElementById("section-title");
+  const contentPlaceholder = document.querySelector(".content-placeholder");
+  const prevBtn = document.getElementById("prev-btn");
+  const nextBtn = document.getElementById("next-btn");
+  const lessonNav = document.getElementById("lesson-navigation");
 
-    let currentSection = 0;
-    let sections = [];
+  let currentSection = 0;
+  let sections = [];
 
-    function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-    }
+  function setNavVisible(visible) {
+    if (lessonNav) lessonNav.hidden = !visible;
+  }
 
-    const courseId = getQueryParam("course_id");
-    if (!courseId) {
-        sectionTitle.textContent = "Course Not Found";
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  function setContentBoxVisible(visible) {
+    if (contentPlaceholder) contentPlaceholder.hidden = !visible;
+  }
+
+  const courseId = getQueryParam("course_id");
+  if (!courseId) {
+    sectionTitle.textContent = "Course Not Found";
+    setNavVisible(false);
+    setContentBoxVisible(false);
+    return;
+  }
+
+  async function fetchLessons() {
+    try {
+      const response = await fetch(`/get_lessons?course_id=${courseId}`);
+      const data = await response.json();
+      if (data.length === 0) {
+        sectionTitle.textContent = "No Lessons Available";
+        setNavVisible(false);
+        setContentBoxVisible(false);
         return;
+      }
+
+      sections = data;
+      setNavVisible(true);
+      setContentBoxVisible(true);
+      updateContent();
+    } catch (error) {
+      console.error("Error fetching lessons:", error);
+      sectionTitle.textContent = "Error loading lessons";
+      setNavVisible(false);
+      setContentBoxVisible(false);
     }
+  }
 
-    async function fetchLessons() {
-        try {
-            const response = await fetch(`/get_lessons?course_id=${courseId}`);
-            const data = await response.json();
-            if (data.length === 0) {
-                sectionTitle.textContent = "No Lessons Available";
-                return;
-            }
+  function updateContent() {
+    if (sections.length === 0) return;
+    sectionTitle.textContent = sections[currentSection].title;
+    contentPlaceholder.innerHTML = `<div class="line">${sections[currentSection].content}</div>`;
 
-            sections = data;
-            updateContent();
-        } catch (error) {
-            console.error("Error fetching lessons:", error);
-            sectionTitle.textContent = "Error loading lessons";
-        }
+    // Show Previous only when not on first lesson; show Next only when not on last lesson
+    if (prevBtn) prevBtn.hidden = currentSection === 0;
+    if (nextBtn) nextBtn.hidden = currentSection === sections.length - 1;
+  }
+
+  prevBtn.addEventListener("click", () => {
+    if (currentSection > 0) {
+      currentSection--;
+      updateContent();
     }
+  });
 
-    function updateContent() {
-        if (sections.length === 0) return;
-        sectionTitle.textContent = sections[currentSection].title;
-        contentPlaceholder.innerHTML = `<div class="line">${sections[currentSection].content}</div>`;
+  nextBtn.addEventListener("click", () => {
+    if (currentSection < sections.length - 1) {
+      currentSection++;
+      updateContent();
     }
+  });
 
-    prevBtn.addEventListener("click", () => {
-        if (currentSection > 0) {
-            currentSection--;
-            updateContent();
-        }
-    });
-
-    nextBtn.addEventListener("click", () => {
-        if (currentSection < sections.length - 1) {
-            currentSection++;
-            updateContent();
-        }
-    });
-
-    fetchLessons();
+  fetchLessons();
 });
