@@ -76,5 +76,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  document.addEventListener("keydown", (e) => {
+    if (sections.length === 0) return;
+    const active = document.activeElement;
+    const isInput =
+      active &&
+      (active.tagName === "INPUT" ||
+        active.tagName === "TEXTAREA" ||
+        active.isContentEditable);
+    if (isInput) return;
+
+    if (e.key === "ArrowLeft") {
+      if (currentSection > 0) {
+        currentSection--;
+        updateContent();
+      }
+    } else if (e.key === "ArrowRight") {
+      if (currentSection < sections.length - 1) {
+        currentSection++;
+        updateContent();
+      }
+    }
+  });
+
   fetchLessons();
 });
