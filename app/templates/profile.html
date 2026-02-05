@@ -1,63 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Profile</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
-</head>
-<body>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/profile.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/footer.css') }}"
+    />
+  </head>
+  <body>
     <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="left-section">
-                    <div class="logo">
-                        <img src="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}" alt="Logo">
-                    </div>
-                    <button class="back-btn" onclick="history.back()">Home</button>
-                </div>
-                <h1>User Profile</h1>
+      <div class="container">
+        <div class="header-content">
+          <div class="left-section">
+            <div class="logo">
+              <img
+                src="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}"
+                alt="Logo"
+              />
             </div>
+            <button class="back-btn" onclick="history.back()">Home</button>
+          </div>
+          <h1>User Profile</h1>
         </div>
+      </div>
     </header>
-    
-    <section class="profile">
-        <div class="container">
-            <div class="profile-header">
-                <img src="{{ url_for('static', filename='images/profile.png')}}" alt="Profile Picture" class="profile-pic">
-                <div class="profile-info">
-                    <h2>{{ user.name }}</h2>
-                    <p>Email: {{ user.email }}</p>
-                    <p>Language: {{ user.learn_languages | join(', ') }}</p>
-                    <p>Progress: {{ progress }}%</p>
-                    <button>Edit Profile</button>
-                </div>
-            </div>
 
-            <div class="progress-bar">
-                <h3>Learning Progress</h3>
-                <div class="progress">
-                    <div class="progress-bar-filled" style="width: {{ progress }}%;"></div>
-                </div>
-            </div>
-            
-            <div class="course-list">
-                <h3>Courses In Progress</h3>
-                <ul>
-                    {% for lang, level in user.progress.items() %}
-                      <li>{{ lang.capitalize() }} - Level {{ loop.index }}</li>
-                    {% endfor %}
-                  </ul>
-                  
-            </div>
+    <section class="profile">
+      <div class="container">
+        <div class="profile-header">
+          <img
+            src="{{ url_for('static', filename='images/profile.png')}}"
+            alt="Profile Picture"
+            class="profile-pic"
+          />
+          <div class="profile-info">
+            <h2>{{ user.name }}</h2>
+            <p>Email: {{ user.email }}</p>
+            <p>Language: {{ user.learn_languages | join(', ') }}</p>
+            <p>Progress: {{ progress }}%</p>
+            <button>Edit Profile</button>
+          </div>
         </div>
+
+        <div class="progress-bar">
+          <h3>Learning Progress</h3>
+          <div class="progress">
+            <div
+              class="progress-bar-filled"
+              style="width: {{ progress }}%;"
+            ></div>
+          </div>
+        </div>
+
+        <div class="course-list">
+          <h3>Courses In Progress</h3>
+          <ul>
+            {% for lang, level in user.progress.items() %}
+            <li>{{ lang.capitalize() }} - Level {{ loop.index }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Speak Ease. All rights reserved.</p>
-        </div>
-    </footer>
-</body>
+    {% include 'includes/footer.html' %}
+  </body>
 </html>

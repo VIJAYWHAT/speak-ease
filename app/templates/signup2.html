@@ -1,136 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Details</title>
-  <link rel="shortcut icon" href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}" type="image/x-icon">
-  <link rel="stylesheet" href="static/css/signup2.css">
-</head>
-<body>
-  <div class="container">
-    <h1>User Details</h1>
-    <form action="{{ url_for('signup2') }}" method="POST">
-      
-      <div class="form-container">
-        <div class="form-section">
-          <label>Name</label>
-          <input type="text" name="name" required>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Details</title>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/signup2.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/footer.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>User Details</h1>
+      <form action="{{ url_for('signup2') }}" method="POST">
+        <div class="form-container">
+          <div class="form-section">
+            <label>Name</label>
+            <input type="text" name="name" required />
 
-          <label>Phone Number</label>
-          <input type="text" name="phone" required>
+            <label>Phone Number</label>
+            <input type="text" name="phone" required />
 
-          <label>Age</label>
-          <input type="text" name="age" required>
+            <label>Age</label>
+            <input type="text" name="age" required />
 
-          <label>Gender</label>
-          <div class="radio-group">
-            <input class="radio-btn" type="radio" name="gender" value="Male" required> Male
-            <input class="radio-btn" type="radio" name="gender" value="Female" required> Female
-            <input class="radio-btn" type="radio" name="gender" value="Other" required> Other
+            <label>Gender</label>
+            <div class="radio-group">
+              <input
+                class="radio-btn"
+                type="radio"
+                name="gender"
+                value="Male"
+                required
+              />
+              Male
+              <input
+                class="radio-btn"
+                type="radio"
+                name="gender"
+                value="Female"
+                required
+              />
+              Female
+              <input
+                class="radio-btn"
+                type="radio"
+                name="gender"
+                value="Other"
+                required
+              />
+              Other
+            </div>
+
+            <label>Native Language</label>
+            <select name="native_language">
+              <option value="tamil">Tamil</option>
+              <option value="english">English</option>
+              <option value="hindi">Hindi</option>
+              <option value="spanish">Spanish</option>
+              <option value="french">French</option>
+            </select>
+
+            <label>Role</label>
+            <select name="role">
+              <option value="Student">Student</option>
+              <option value="Tutor">Tutor</option>
+            </select>
           </div>
 
-          <label>Native Language</label>
-          <select name="native_language">
-            <option value="tamil">Tamil</option>
-            <option value="english">English</option>
-            <option value="hindi">Hindi</option>
-            <option value="spanish">Spanish</option>
-            <option value="french">French</option>
-          </select>
+          <div class="form-section">
+            <label>I want to learn...</label>
+            <div class="learn-group">
+              <button type="button" class="learn-btn" data-value="english">
+                English
+              </button>
+              <button type="button" class="learn-btn" data-value="hindi">
+                Hindi
+              </button>
+              <button type="button" class="learn-btn" data-value="spanish">
+                Spanish
+              </button>
+              <button type="button" class="learn-btn" data-value="french">
+                French
+              </button>
+              <button type="button" class="learn-btn" data-value="tamil">
+                Tamil
+              </button>
+            </div>
+            <input
+              type="hidden"
+              name="learn_languages"
+              id="learnLanguagesInput"
+            />
 
-          <label>Role</label>
-          <select name="role">
-            <option value="Student">Student</option>
-            <option value="Tutor">Tutor</option>
-          </select>
+            <label>Reason for Learning</label>
+            <div class="learn-group">
+              <button
+                type="button"
+                class="reason-btn"
+                data-value="Learn new language"
+              >
+                Learn new language
+              </button>
+              <button
+                type="button"
+                class="reason-btn"
+                data-value="Just for fun"
+              >
+                Just for fun
+              </button>
+              <button
+                type="button"
+                class="reason-btn"
+                data-value="Boost career opportunities"
+              >
+                Boost career
+              </button>
+              <button type="button" class="reason-btn" data-value="Travel">
+                Travel
+              </button>
+            </div>
+            <input
+              type="hidden"
+              name="learning_reason"
+              id="learningReasonInput"
+            />
+
+            <label>Location</label>
+            <select name="location">
+              <option value="William Lake">William Lake</option>
+              <option value="New York">New York</option>
+              <option value="Los Angeles">Los Angeles</option>
+            </select>
+
+            <label>Availability</label>
+            <div class="availability">
+              <input type="time" name="availability_from" required />
+              <input type="time" name="availability_to" required />
+            </div>
+
+            <label>Days Available</label>
+            <div class="learn-group">
+              <input type="checkbox" name="available_days" value="Sunday" /> S
+              <input type="checkbox" name="available_days" value="Monday" /> M
+              <input type="checkbox" name="available_days" value="Tuesday" /> T
+              <input type="checkbox" name="available_days" value="Wednesday" />
+              W
+              <input type="checkbox" name="available_days" value="Thursday" /> T
+              <input type="checkbox" name="available_days" value="Friday" /> F
+              <input type="checkbox" name="available_days" value="Saturday" /> S
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+          </div>
         </div>
-
-        <div class="form-section">
-          <label>I want to learn...</label>
-          <div class="learn-group">
-            <button type="button" class="learn-btn" data-value="english">English</button>
-            <button type="button" class="learn-btn" data-value="hindi">Hindi</button>
-            <button type="button" class="learn-btn" data-value="spanish">Spanish</button>
-            <button type="button" class="learn-btn" data-value="french">French</button>
-            <button type="button" class="learn-btn" data-value="tamil">Tamil</button>
-
-          </div>
-          <input type="hidden" name="learn_languages" id="learnLanguagesInput">
-
-          <label>Reason for Learning</label>
-          <div class="learn-group">
-            <button type="button" class="reason-btn" data-value="Learn new language">Learn new language</button>
-            <button type="button" class="reason-btn" data-value="Just for fun">Just for fun</button>
-            <button type="button" class="reason-btn" data-value="Boost career opportunities">Boost career</button>
-            <button type="button" class="reason-btn" data-value="Travel">Travel</button>
-          </div>
-          <input type="hidden" name="learning_reason" id="learningReasonInput">
-
-          <label>Location</label>
-          <select name="location">
-            <option value="William Lake">William Lake</option>
-            <option value="New York">New York</option>
-            <option value="Los Angeles">Los Angeles</option>
-          </select>
-
-          <label>Availability</label>
-          <div class="availability">
-            <input type="time" name="availability_from" required>
-            <input type="time" name="availability_to" required>
-          </div>
-
-          <label>Days Available</label>
-          <div class="learn-group">
-            <input type="checkbox" name="available_days" value="Sunday"> S
-            <input type="checkbox" name="available_days" value="Monday"> M
-            <input type="checkbox" name="available_days" value="Tuesday"> T
-            <input type="checkbox" name="available_days" value="Wednesday"> W
-            <input type="checkbox" name="available_days" value="Thursday"> T
-            <input type="checkbox" name="available_days" value="Friday"> F
-            <input type="checkbox" name="available_days" value="Saturday"> S
-          </div>
-          <button type="submit" class="submit-btn">Submit</button>
-        </div>
-      </div>
-
-      
-    </form>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
+      </form>
+    </div>
+    {% include 'includes/footer.html' %}
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
         const learnButtons = document.querySelectorAll(".learn-btn");
         const reasonButtons = document.querySelectorAll(".reason-btn");
         const learnInput = document.getElementById("learnLanguagesInput");
         const reasonInput = document.getElementById("learningReasonInput");
 
         function toggleSelection(button, inputField) {
-            button.classList.toggle("selected");
+          button.classList.toggle("selected");
 
-            // Store values as a proper array (space-separated instead of comma-separated)
-            const selectedValues = Array.from(button.parentElement.children)
-                .filter(btn => btn.classList.contains("selected"))
-                .map(btn => btn.getAttribute("data-value"));
+          // Store values as a proper array (space-separated instead of comma-separated)
+          const selectedValues = Array.from(button.parentElement.children)
+            .filter((btn) => btn.classList.contains("selected"))
+            .map((btn) => btn.getAttribute("data-value"));
 
-            inputField.value = JSON.stringify(selectedValues);  // 🔹 Store as JSON array
+          inputField.value = JSON.stringify(selectedValues); // 🔹 Store as JSON array
         }
 
-        learnButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                toggleSelection(button, learnInput);
-            });
+        learnButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            toggleSelection(button, learnInput);
+          });
         });
 
-        reasonButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                toggleSelection(button, reasonInput);
-            });
+        reasonButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            toggleSelection(button, reasonInput);
+          });
         });
-    });
-
-  </script>
-
-
-</body>
+      });
+    </script>
+  </body>
 </html>

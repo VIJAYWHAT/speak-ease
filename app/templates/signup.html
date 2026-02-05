@@ -9,6 +9,10 @@
       href="{{ url_for('static', filename='css/login.css') }}"
     />
     <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/footer.css') }}"
+    />
+    <link
       rel="shortcut icon"
       href="{{ url_for('static', filename='images/Speak-ease-Logo.png')}}"
       type="image/x-icon"
@@ -65,7 +69,7 @@
         Google
       </button>
     </div>
-
+    {% include 'includes/footer.html' %}
     <script
       type="module"
       src="{{ url_for('static', filename='js/firebase_auth.js') }}"
