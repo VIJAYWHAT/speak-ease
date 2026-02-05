@@ -135,7 +135,7 @@ header {
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
-  margin-top: 20px;
+  margin: 20px 0;
 }
 .progress-card {
   background: #4da6ff;

@@ -3,9 +3,9 @@
   margin-top: auto;
   background: #0073e6;
   color: rgba(255, 255, 255, 0.95);
-  padding: 24px 20px;
+  padding: 15px 20px;
   text-align: center;
-  border-top: 2px solid #005bb5;
+  border-top: 1px solid #005bb5;
 }
 
 .footer-inner {
@@ -33,6 +33,7 @@
   color: rgba(255, 255, 255, 0.85);
   margin: 0 0 12px 0;
   line-height: 1.4;
+  display: inline;
 }
 
 .footer-copy {
